@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GuardSystem — Usuários</title>
+    <link rel="stylesheet" href="../global/global.css" />
+    <link rel="stylesheet" href="../css/usuarios.css" />
+    <script src="../global/utils.js" defer></script>
+    <script src="../js/usuarios.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Voltar -->
+      <a class="back-btn" href="home.html">←</a>
+
+      <div class="logo">
+        <img src="../assets/GuarSystem.png" alt="GuardSystem" />
+      </div>
+
+      <!-- Lista preenchida pelo JS -->
+      <div class="list-container" id="lista-usuarios"></div>
+
+      <!-- Modal: Excluir Usuário -->
+      <div class="modal-overlay" id="modal-excluir-usuario">
+        <div class="modal">
+          <h3>Excluir Usuário</h3>
+          <p>Deseja mesmo excluir este usuário?</p>
+          <div class="modal-actions">
+            <button class="modal-btn" onclick="closeModal('modal-excluir-usuario')">
+              Não
+            </button>
+            <button class="modal-btn confirm" onclick="confirmarExcluirUsuario()">
+              Sim
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </body>
+</html>

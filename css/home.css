@@ -1,0 +1,16 @@
+/* home.css — estilos específicos da tela Home */
+
+.home-actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Garantir que links se comportem como botões */
+.home-actions .btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}

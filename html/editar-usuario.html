@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GuardSystem — Editar Usuário</title>
+    <link rel="stylesheet" href="../global/global.css" />
+    <link rel="stylesheet" href="../css/editar-usuario.css" />
+    <script src="../global/utils.js" defer></script>
+    <script src="../js/editar-usuario.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Voltar -->
+      <a class="back-btn" href="usuarios.html">←</a>
+
+      <div class="logo">
+        <img src="../assets/GuarSystem.png" alt="GuardSystem" />
+      </div>
+
+      <div class="avatar-icon">👤</div>
+
+      <div class="form-group">
+        <label for="edit-nome">Nome:</label>
+        <input type="text" id="edit-nome" placeholder="Nome completo" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-cpf">CPF:</label>
+        <input
+          type="text"
+          id="edit-cpf"
+          placeholder="555.555.555-55"
+          maxlength="14"
+          oninput="maskCPF(this)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-senha">Senha:</label>
+        <input type="password" id="edit-senha" placeholder="**************" />
+      </div>
+
+      <button class="btn btn-dark" onclick="salvarEdicao()">Editar</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </body>
+</html>

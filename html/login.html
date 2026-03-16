@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GuardSystem — Login</title>
+    <link rel="stylesheet" href="../global/global.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <script src="../global/utils.js" defer></script>
+    <script src="../js/login.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <div class="logo">
+        <img src="../assets/GuarSystem.png" alt="GuardSystem" />
+      </div>
+
+      <div class="form-group">
+        <label for="login-cpf">CPF:</label>
+        <input
+          type="text"
+          id="login-cpf"
+          placeholder="CPF..."
+          maxlength="14"
+          oninput="maskCPF(this)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="login-senha">Senha:</label>
+        <input type="password" id="login-senha" placeholder="Senha..." />
+      </div>
+
+      <button class="btn btn-dark" onclick="doLogin()">Login</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </body>
+</html>
