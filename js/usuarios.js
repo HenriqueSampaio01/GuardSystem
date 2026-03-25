@@ -11,10 +11,13 @@ let usuarios = [
 
 let pendingDeleteId = null;
 
-// ===== RENDERIZAR LISTA =====
-function renderUsuarios() {
-  const container = document.getElementById("lista-usuarios");
-  container.innerHTML = "";
+//RENDERIZAR LISTA
+async function renderUsuarios() {
+    const response = await fetch("http://localhost/api/usuarios.php");
+    const usuarios = await response.json(); // PHP -> JSON -> array JS
+
+    const container = document.getElementById("lista-usuarios");
+    container.innerHTML = "";
 
   usuarios.forEach((u) => {
     const item = document.createElement("div");
