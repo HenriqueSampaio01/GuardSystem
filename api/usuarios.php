@@ -24,3 +24,22 @@ function listarUsuarios()
     
     echo json_encode($usuarios);
 }
+
+function criarUsuario() {
+    global $pdo;
+
+    $body = file_get_contents("php://input");
+    $dados = json_decode($body, true);
+
+    //Obtendo os dados do frontend
+    $nome = $dados["nome"];
+    $cpf = $dados["cpf"];
+    $senha = $dados["senha"];
+
+    //Criptografando a senha
+    $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
+
+    $stmt = $pdo->prepare("INSERT INTO usuarios (nome, cpf, senha) VALUES (:nome, :cpf, :senha)");
+
+    echo json_encode(["mensagem" => "Usuário criado!"]);
+}
