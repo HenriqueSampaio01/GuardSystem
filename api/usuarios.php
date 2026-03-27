@@ -32,14 +32,20 @@ function criarUsuario() {
     $dados = json_decode($body, true);
 
     //Obtendo os dados do frontend
-    $nome = $dados["nome"];
-    $cpf = $dados["cpf"];
-    $senha = $dados["senha"];
+    $nome = trim($dados["nome"]) ?? '';
+    $cpf = trim($dados["cpf"]) ?? '';
+    $senha = trim($dados["senha"]) ?? '';
 
+    if(!$nome || !$cpf){
+        echo json_encode(["mensagem" => "Erro: Nome e CPF são obrigatórios!"]);
+        return;
+    }
+    
     //Criptografando a senha
     $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
 
     $stmt = $pdo->prepare("INSERT INTO usuarios (nome, cpf, senha) VALUES (:nome, :cpf, :senha)");
+    $stmt->execute([":nome" => $nome, ":cpf" => $cpf, ":senha" => $senhaCriptografada]);
 
     echo json_encode(["mensagem" => "Usuário criado!"]);
 }
