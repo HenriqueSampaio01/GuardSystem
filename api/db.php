@@ -2,8 +2,8 @@
 
 $host = "mysql.railway.internal";
 $banco = "railway";
-$usuario = "ToUiceerERxwvprIkokZSRCWgZjosVbJ";
-$senha = "HXfFYn3lj4";
+$usuario = "root";
+$senha = "ToUiceerERxwvprIkokZSRCWgZjosVbJ";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
