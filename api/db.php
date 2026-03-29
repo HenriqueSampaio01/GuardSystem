@@ -1,9 +1,9 @@
 <?php
 
-$host = "db";
-$banco = "guardsystem";
-$usuario = "root";
-$senha = "root";
+$host = "sql108.infinityfree.com";
+$banco = "if0_41492093_XXX";
+$usuario = "if0_41492093";
+$senha = "HXfFYn3lj4";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
