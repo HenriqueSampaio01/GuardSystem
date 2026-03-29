@@ -3,7 +3,7 @@ const userId = parseInt(params.get("id"));
 
 // ===== PRÉ-PREENCHER FORMULÁRIO =====
 document.addEventListener("DOMContentLoaded", async () => {
-  const response = await fetch(`http://localhost/api/usuarios.php?id=${userId}`);
+  const response = await fetch(`https://guardsystem.up.railway.app/api/usuarios.php?id=${userId}`);
   const usuario = await response.json();
   if (usuario) {
     document.getElementById("edit-nome").value = usuario.nome;
@@ -22,7 +22,7 @@ async function salvarEdicao() {
     return;
   }
 
-  await fetch(`http://localhost/api/usuarios.php?id=${userId}`, {
+  await fetch(`https://guardsystem.up.railway.app/api/usuarios.php?id=${userId}`, {
   method: "PUT",
   headers: {"Content-Type": "application/json"},
   body: JSON.stringify({nome, cpf, senha})
