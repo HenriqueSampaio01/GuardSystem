@@ -1,8 +1,8 @@
 <?php
 
-$host = "sql108.infinityfree.com";
-$banco = "if0_41492093_XXX";
-$usuario = "if0_41492093";
+$host = "mysql.railway.internal";
+$banco = "railway";
+$usuario = "ToUiceerERxwvprIkokZSRCWgZjosVbJ";
 $senha = "HXfFYn3lj4";
 
 header("Access-Control-Allow-Origin: *");
