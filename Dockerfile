@@ -1,3 +1,3 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 RUN docker-php-ext-install pdo pdo_mysql
-RUN a2dismod mpm_event mpm_worker mpm_prefork && a2enmod mpm_prefork
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/html"]
