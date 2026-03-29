@@ -19,6 +19,16 @@ switch ($metodo) {
 function listarUsuarios()
 {
     global $pdo; //acessa a conexão no db.php
+
+    $id = $_GET["id"] ?? null;
+
+    if ($id) {
+        $stmt = $pdo->prepare("SELECT id, nome, cpf FROM usuarios WHERE id = :id");
+        $stmt->execute([":id" => $id]);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($usuario);
+        return;
+    }
     $stmt = $pdo->query("SELECT id, nome, cpf FROM usuarios");
     $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -48,4 +58,42 @@ function criarUsuario() {
     $stmt->execute([":nome" => $nome, ":cpf" => $cpf, ":senha" => $senhaCriptografada]);
 
     echo json_encode(["mensagem" => "Usuário criado!"]);
+}
+
+function excluirUsuario() {
+    global $pdo;
+    $id = $_GET["id"] ?? null; //Le o ?id da URL
+
+    if(!$id){
+        echo json_encode(["mensagem" => "Erro: ID é Obrigatório!"]);
+        return;
+    }
+
+    $stmt = $pdo->prepare("DELETE FROM usuarios WHERE id = :id");
+    $stmt->execute([":id" => $id]);
+
+    echo json_encode(["mensagem" => "Usuário excluído!"]);
+}
+
+function editarUsuario() {
+    global $pdo;
+    $id = $_GET["id"] ?? null;
+    $body = file_get_contents("php://input");
+    $dados = json_decode($body, true);
+
+    if(!$id){
+        echo json_encode(["mensagem" => "Erro: ID é Obrigatório!"]);
+        return;
+    }
+    
+    $nome = trim($dados["nome"]) ?? '';
+    $cpf = trim($dados["cpf"]) ?? '';
+    $senha = trim($dados["senha"]) ?? '';
+
+    $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
+
+    $stmt = $pdo->prepare("UPDATE usuarios SET nome = :nome, cpf = :cpf, senha = :senha WHERE id = :id");
+    $stmt->execute([":nome" => $nome, ":cpf" => $cpf, ":senha" => $senhaCriptografada, ":id" => $id]);
+
+    echo json_encode(["mensagem" => "Usuário atualizado!"]);
 }

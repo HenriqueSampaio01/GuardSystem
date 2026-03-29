@@ -10,5 +10,5 @@ function doLogin() {
   }
 
   // TODO: validar credenciais com a API
-  window.location.href = "/HTML/home.html";
+  window.location.href = "home.html";
 }

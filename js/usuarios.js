@@ -1,14 +1,3 @@
-// usuarios.js — lógica da tela de Usuários
-
-// TODO: substituir por chamada à API
-let usuarios = [
-  { id: 1, nome: "Alexandre Rodrigues Filho", cpf: "000.111.222-33" },
-  { id: 2, nome: "Antonio Augusto Aguiar",    cpf: "208.179.098-23" },
-  { id: 3, nome: "Henrique Sampaio Occaso",   cpf: "444.555.666-77" },
-  { id: 4, nome: "Diego Henrique Ribeiro",    cpf: "389.190.798-19" },
-  { id: 5, nome: "Eduardo Henrique Domingues",cpf: "888.999.111-22" },
-];
-
 let pendingDeleteId = null;
 
 //RENDERIZAR LISTA
@@ -43,8 +32,8 @@ function pedirExcluir(id) {
   openModal("modal-excluir-usuario");
 }
 
-function confirmarExcluirUsuario() {
-  usuarios = usuarios.filter((u) => u.id !== pendingDeleteId);
+async function confirmarExcluirUsuario() {
+  const response = await fetch(`http://localhost/api/usuarios.php?id=${pendingDeleteId}`, {method: "DELETE"});
   closeModal("modal-excluir-usuario");
   renderUsuarios();
   showToast("Usuário excluído!");
@@ -52,7 +41,7 @@ function confirmarExcluirUsuario() {
 
 // ===== EDITAR (navegar com ID na URL) =====
 function irParaEditar(id) {
-  window.location.href = `../editar-usuario/editar-usuario.html?id=${id}`;
+  window.location.href = `editar-usuario.html?id=${id}`;
 }
 
 // ===== INIT =====
