@@ -1,0 +1,40 @@
+<?php
+require_once "db.php";
+//Permite que o front JS acessa a API
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+
+//Faz o php ver o metodo que chegou
+$metodo = $_SERVER["REQUEST_METHOD"];
+
+function login() {
+    global $pdo;
+
+    $body = file_get_contents("php://input");
+    $dados = json_decode($body, true);
+
+    $cpf = trim($dados["cpf"]) ?? '';
+    $senha = trim($dados["senha"]) ?? '';
+
+    if(!$cpf || !$senha){
+        echo json_encode(["mensagem" => "Erro: CPF e senha são obrigatórios!"]);
+        return;
+    }
+    
+    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE cpf = :cpf");
+    $stmt->execute([":cpf" => $cpf]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(!$usuario){
+        echo json_encode(["mensagem" => "Erro: Usuário não encontrado!"]);
+        return;
+}
+
+if(!password_verify($senha, $usuario["senha"])){
+    echo json_encode(["mensagem" => "Erro: Senha incorreta!"]);
+    return;
+}
+
+echo json_encode(["mensagem" => "Login realizado com sucesso!", "usuario" => $usuario]);
+
+}
