@@ -7,6 +7,10 @@ header("Content-Type: application/json");
 //Faz o php ver o metodo que chegou
 $metodo = $_SERVER["REQUEST_METHOD"];
 
+switch ($metodo) {
+    case "POST":   login();   break;
+}
+
 function login() {
     global $pdo;
 
@@ -35,6 +39,6 @@ if(!password_verify($senha, $usuario["senha"])){
     return;
 }
 
-echo json_encode(["mensagem" => "Login realizado com sucesso!", "usuario" => $usuario]);
+echo json_encode(["mensagem" => "Login realizado com sucesso!", "usuario" => ["nome" => $usuario["nome"], "id" => $usuario["id"]]]);
 
 }

@@ -1,14 +1,9 @@
-// login.js — lógica da tela de Login
+async function doLogin() {
+  const response = await fetch(`https://guardsystem.up.railway.app/api/login.php`);
+  const usuario = await response.json();
 
-function doLogin() {
-  const cpf = document.getElementById("login-cpf").value.trim();
-  const senha = document.getElementById("login-senha").value.trim();
-
-  if (!cpf || !senha) {
-    showToast("Preencha CPF e senha!");
-    return;
+  if (usuario) {
+    document.getElementById("login-cpf").value = usuario.cpf;
+    document.getElementById("login-senha").value  = usuario.senha;
   }
-
-  // TODO: validar credenciais com a API
-  window.location.href = "home.html";
 }

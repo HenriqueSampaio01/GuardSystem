@@ -1,12 +1,3 @@
-// ===== DATA =====
-let usuarios = [
-  { id: 1, nome: "Alexandre Rodrigues Filho", cpf: "000.111.222-33" },
-  { id: 2, nome: "Antonio Augusto Aguiar", cpf: "208.179.098-23" },
-  { id: 3, nome: "Henrique Sampaio Occaso", cpf: "444.555.666-77" },
-  { id: 4, nome: "Diego Henrique Ribeiro", cpf: "389.190.798-19" },
-  { id: 5, nome: "Eduardo Henrique Domingues", cpf: "888.999.111-22" },
-];
-
 let ocorrencias = [
   { id: 1, conselheiro: "Diego" },
   { id: 2, conselheiro: "Henrique" },
