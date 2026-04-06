@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GuardSystem — Adicionar Usuário</title>
+    <link rel="stylesheet" href="/global/global.css" />
+    <script src="/global/utils.js" defer></script>
+    <script src="/js/criar-usuario.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <a class="back-btn" href="usuarios.html">←</a>
+
+      <div class="logo">
+        <img src="/assets/GuarSystem.png" alt="GuardSystem" />
+      </div>
+
+      <div class="avatar-icon">👤</div>
+
+      <div class="form-group">
+        <label for="add-nome">Nome:</label>
+        <input type="text" id="add-nome" placeholder="Nome completo" />
+      </div>
+
+      <div class="form-group">
+        <label for="add-cpf">CPF:</label>
+        <input
+          type="text"
+          id="add-cpf"
+          placeholder="555.555.555-55"
+          maxlength="14"
+          oninput="maskCPF(this)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="add-senha">Senha:</label>
+        <input type="password" id="add-senha" placeholder="**************" />
+      </div>
+
+      <button class="btn btn-dark" onclick="adicionarUsuario()">Adicionar</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </body>
+</html>
