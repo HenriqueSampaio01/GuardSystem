@@ -33,7 +33,7 @@ function pedirExcluir(id) {
 }
 
 async function confirmarExcluirUsuario() {
-  const response = await fetch("/api/usuarios.php?id=${pendingDeleteId}", {method: "DELETE"});
+  const response = await fetch('/api/usuarios.php?id=${pendingDeleteId}', {method: "DELETE"});
   closeModal("modal-excluir-usuario");
   renderUsuarios();
   showToast("Usuário excluído!");
