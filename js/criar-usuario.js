@@ -9,7 +9,7 @@ async function adicionarUsuario() {
     return;
   }
 
-  await fetch(`https://guardsystem.up.railway.app/api/usuarios.php`, {
+  await fetch("/api/usuarios.php", {
   method: "POST",
   headers: {"Content-Type": "application/json"},
   body: JSON.stringify({nome, cpf, senha})

@@ -2,7 +2,7 @@ let pendingDeleteId = null;
 
 //RENDERIZAR LISTA
 async function renderUsuarios() {
-    const response = await fetch("https://guardsystem.up.railway.app/api/usuarios.php");
+    const response = await fetch("/api/usuarios.php");
     const usuarios = await response.json(); // PHP -> JSON -> array JS
 
     const container = document.getElementById("lista-usuarios");
@@ -33,7 +33,7 @@ function pedirExcluir(id) {
 }
 
 async function confirmarExcluirUsuario() {
-  const response = await fetch(`https://guardsystem.up.railway.app/api/usuarios.php?id=${pendingDeleteId}`, {method: "DELETE"});
+  const response = await fetch("/api/usuarios.php?id=${pendingDeleteId}", {method: "DELETE"});
   closeModal("modal-excluir-usuario");
   renderUsuarios();
   showToast("Usuário excluído!");
