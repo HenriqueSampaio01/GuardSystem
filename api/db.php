@@ -1,9 +1,10 @@
 <?php
 
-$host = "mysql.railway.internal";
-$banco = "railway";
-$usuario = "root";
-$senha = "ToUiceerERxwvprIkokZSRCWgZjosVbJ";
+$host = getenv('DB_HOST');
+$banco = getenv('DB_NAME');
+$porta = getenv('DB_PORT');
+$usuario = getenv('DB_USER');
+$senha = getenv('DB_PASSWORD');
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 }
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
+    $pdo = new PDO("pgsql:host=$host;port=$porta;dbname=$banco", $usuario, $senha);
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
