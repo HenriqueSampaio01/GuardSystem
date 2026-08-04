@@ -1,5 +1,22 @@
 /* home.css — estilos específicos da tela Home */
 
+.welcome {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.welcome h1 {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+.welcome p {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
 .home-actions {
   display: flex;
   gap: 20px;
@@ -10,7 +27,24 @@
 /* Garantir que links se comportem como botões */
 .home-actions .btn-action {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   text-decoration: none;
+  width: 180px;
+  padding: 28px 20px;
+  border-radius: var(--radius-lg);
+}
+
+.home-actions .btn-action::after {
+  font-size: 30px;
+  line-height: 1;
+}
+.home-actions .btn-action:nth-child(1)::after { content: "🛡️"; }
+.home-actions .btn-action:nth-child(2)::after { content: "🚨"; }
+
+/* Reordena para o ícone aparecer acima do texto */
+.home-actions .btn-action {
+  flex-direction: column-reverse;
 }
