@@ -1,18 +1,10 @@
-// ocorrencias.js — lógica da tela de Ocorrências
-
-// TODO: substituir por chamada à API
-let ocorrencias = [
-  { id: 1, conselheiro: "Diego" },
-  { id: 2, conselheiro: "Henrique" },
-  { id: 3, conselheiro: "Alexandre" },
-  { id: 4, conselheiro: "Augusto" },
-  { id: 5, conselheiro: "Eduardo" },
-];
-
 let pendingDeleteId = null;
 
-// ===== RENDERIZAR LISTA =====
-function renderOcorrencias() {
+//RENDERIZAR LISTA
+async function renderOcorrencias() {
+  const response = await fetch("/api/ocorrencias.php");
+  const ocorrencias = await response.json();
+
   const container = document.getElementById("lista-ocorrencias");
   container.innerHTML = "";
 
@@ -40,8 +32,8 @@ function pedirExcluir(id) {
   openModal("modal-excluir-ocorrencia");
 }
 
-function confirmarExcluirOcorrencia() {
-  ocorrencias = ocorrencias.filter((o) => o.id !== pendingDeleteId);
+async function confirmarExcluirOcorrencia() {
+  const response = await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {method: "DELETE"});
   closeModal("modal-excluir-ocorrencia");
   renderOcorrencias();
   showToast("Ocorrência excluída!");
@@ -49,8 +41,7 @@ function confirmarExcluirOcorrencia() {
 
 // ===== EDITAR =====
 function editarOcorrencia(id) {
-  // TODO: navegar para tela de editar ocorrência
-  showToast("Edição de ocorrência em breve!");
+  window.location.href = `editar-ocorrencia.html?id=${id}`;
 }
 
 // ===== INIT =====
