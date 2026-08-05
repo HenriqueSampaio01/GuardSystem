@@ -5,24 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GuardSystem — Editar Ocorrência</title>
     <link rel="stylesheet" href="/global/global.css" />
+    <script src="/global/utils.js" defer></script>
+    <script src="/js/editar-ocorrencia.js" defer></script>
   </head>
   <body>
     <div class="page">
       <a class="back-btn" href="ocorrencias.html">←</a>
-    </div>
 
-    <div class="logo">
-      <img src="/assets/GuarSystem.png" alt="GuardSystem" />
-      <span class="brand-tag">Editar Ocorrência</span>
-    </div>
-
-    <h2 class="section-title">Editar Ocorrência</h2>
-    
-    <form id="form-editar-ocorrencia">
-      <div class="form-group">
-        <label for="data">Data</label>
-        <input type="date" id="data" name="data" required />
+      <div class="logo">
+        <img src="/assets/GuarSystem.png" alt="GuardSystem" />
+        <span class="brand-tag">Editar Ocorrência</span>
       </div>
-    </form>
+
+      <div class="avatar-icon">📄</div>
+
+      <div class="form-group">
+        <label for="edit-data">Data:</label>
+        <input type="date" id="edit-data" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-hora">Hora:</label>
+        <input type="time" id="edit-hora" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-rua">Rua:</label>
+        <input type="text" id="edit-rua" placeholder="Endereço da ocorrência" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-bairro">Bairro:</label>
+        <input type="text" id="edit-bairro" placeholder="Nome do bairro" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-cep">CEP:</label>
+        <input
+          type="text"
+          id="edit-cep"
+          placeholder="00000-000"
+          maxlength="9"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-tipo">Tipo de Ocorrência:</label>
+        <input type="text" id="edit-tipo" placeholder="Ex: Negligência, Evasão Escolar, Abuso..." />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-forma-recebimento">Forma de Recebimento:</label>
+        <input type="text" id="edit-forma-recebimento" placeholder="Ex: Denúncia Anônima, Escola, Ofício..." />
+      </div>
+
+      <button class="btn btn-dark" onclick="salvarEdicao()">Editar</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
   </body>
 </html>
