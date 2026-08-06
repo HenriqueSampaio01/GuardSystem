@@ -201,6 +201,8 @@ usuarios (1) ────< (N) ocorrencias
 
 Todas as rotas são acessíveis em `/api/`, retornam **JSON** e aceitam requisições `OPTIONS` (preflight CORS). CORS está habilitado para qualquer origem (`Access-Control-Allow-Origin: *`).
 
+As respostas usam **status HTTP semânticos**: `200` sucesso · `400` validação/campo obrigatório · `401` credenciais inválidas · `404` registro não encontrado · `409` CPF duplicado · `500` erro de conexão com o banco.
+
 ### 🔐 Autenticação
 
 | Método | Rota | Corpo da Requisição | Resposta |
@@ -214,7 +216,7 @@ Todas as rotas são acessíveis em `/api/`, retornam **JSON** e aceitam requisi�
 | `GET` | `/api/usuarios.php` | — | Lista todos os usuários |
 | `GET` | `/api/usuarios.php?id=X` | — | Busca um usuário específico |
 | `POST` | `/api/usuarios.php` | `{ "nome", "cpf", "senha" }` | Cria um usuário |
-| `PUT` | `/api/usuarios.php?id=X` | `{ "nome", "cpf", "senha" }` | Atualiza um usuário |
+| `PUT` | `/api/usuarios.php?id=X` | `{ "nome", "cpf", "senha?" }` | Atualiza um usuário — `senha` em branco mantém a atual |
 | `DELETE` | `/api/usuarios.php?id=X` | — | Exclui um usuário |
 
 ### 📄 Ocorrências
@@ -261,7 +263,7 @@ A interface foi desenhada com atenção aos detalhes:
 - [ ] Exportação de relatórios (CSV/PDF) das ocorrências
 - [ ] Filtros e busca por tipo, data e bairro
 - [ ] Anexo de documentos/imagens às ocorrências
-- [ ] Mensagens de erro mais descritivas no backend
+- [ ] Mensagens de erro mais descritivas (validação campo a campo)
 - [ ] Testes automatizados (PHPUnit + testes de integração)
 
 ---
