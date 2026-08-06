@@ -17,10 +17,11 @@ function login() {
     $body = file_get_contents("php://input");
     $dados = json_decode($body, true);
 
-    $cpf = trim($dados["cpf"]) ?? '';
-    $senha = trim($dados["senha"]) ?? '';
+    $cpf = trim($dados["cpf"] ?? '');
+    $senha = trim($dados["senha"] ?? '');
 
     if(!$cpf || !$senha){
+        http_response_code(400);
         echo json_encode(["mensagem" => "Erro: CPF e senha são obrigatórios!"]);
         return;
     }
@@ -30,11 +31,13 @@ function login() {
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if(!$usuario){
+        http_response_code(404);
         echo json_encode(["mensagem" => "Erro: Usuário não encontrado!"]);
         return;
 }
 
 if(!password_verify($senha, $usuario["senha"])){
+    http_response_code(401);
     echo json_encode(["mensagem" => "Erro: Senha incorreta!"]);
     return;
 }

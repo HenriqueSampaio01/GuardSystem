@@ -9,11 +9,18 @@ async function adicionarUsuario() {
     return;
   }
 
-  await fetch("/api/usuarios.php", {
+  const response = await fetch("/api/usuarios.php", {
   method: "POST",
   headers: {"Content-Type": "application/json"},
   body: JSON.stringify({nome, cpf, senha})
  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    showToast(data.mensagem || "Erro ao adicionar usuário!");
+    return;
+  }
 
   showToast("Usuário adicionado!");
   setTimeout(() => {

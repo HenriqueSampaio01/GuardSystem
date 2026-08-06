@@ -5,6 +5,13 @@ const userId = parseInt(params.get("id"));
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch(`/api/usuarios.php?id=${userId}`);
   const usuario = await response.json();
+
+  if (!response.ok) {
+    showToast(usuario.mensagem || "Usuário não encontrado!");
+    setTimeout(() => { window.location.href = "usuarios.html"; }, 1200);
+    return;
+  }
+
   if (usuario) {
     document.getElementById("edit-nome").value = usuario.nome;
     document.getElementById("edit-cpf").value  = usuario.cpf;
@@ -22,11 +29,21 @@ async function salvarEdicao() {
     return;
   }
 
-  await fetch(`/api/usuarios.php?id=${userId}`, {
+  const payload = {nome, cpf};
+  if (senha) payload.senha = senha; // senha em branco mantém a atual
+
+  const response = await fetch(`/api/usuarios.php?id=${userId}`, {
   method: "PUT",
   headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({nome, cpf, senha})
+  body: JSON.stringify(payload)
  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    showToast(data.mensagem || "Erro ao atualizar usuário!");
+    return;
+  }
 
   showToast("Usuário atualizado!");
   setTimeout(() => {

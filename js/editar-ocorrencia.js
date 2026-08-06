@@ -5,6 +5,13 @@ const ocorrenciaId = parseInt(params.get("id"));
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
   const ocorrencia = await response.json();
+
+  if (!response.ok) {
+    showToast(ocorrencia.mensagem || "Ocorrência não encontrada!");
+    setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1200);
+    return;
+  }
+
   if (ocorrencia) {
     document.getElementById("edit-data").value = ocorrencia.data;
     document.getElementById("edit-hora").value  = ocorrencia.hora;
@@ -31,11 +38,18 @@ async function salvarEdicao() {
     return;
   }
 
-  await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
+  const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
   method: "PUT",
   headers: {"Content-Type": "application/json"},
   body: JSON.stringify({data, hora, rua, bairro, cep, tipo, forma_de_recebimento: forma_de_recebimento})
  });
+
+  const resposta = await response.json();
+
+  if (!response.ok) {
+    showToast(resposta.mensagem || "Erro ao atualizar ocorrência!");
+    return;
+  }
 
   showToast("Ocorrência atualizada!");
   setTimeout(() => {
