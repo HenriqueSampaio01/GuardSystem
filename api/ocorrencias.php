@@ -32,6 +32,13 @@ function listarOcorrencias()
         $stmt = $pdo->prepare("$sql WHERE o.id = :id");
         $stmt->execute([":id" => $id]);
         $ocorrencia = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$ocorrencia) {
+            http_response_code(404);
+            echo json_encode(["mensagem" => "Erro: Ocorrência não encontrada!"]);
+            return;
+        }
+
         echo json_encode($ocorrencia);
         return;
     }
@@ -59,6 +66,7 @@ function criarOcorrencia() {
     $usuarioId = $dados["usuario_id"] ?? null;
 
     if (!$data || !$hora || !$usuarioId) {
+        http_response_code(400);
         echo json_encode(["mensagem" => "Erro: Data, hora e usuário são obrigatórios!"]);
         return;
     }
@@ -86,7 +94,16 @@ function editarOcorrencia() {
     $dados = json_decode($body, true);
 
     if (!$id) {
+        http_response_code(400);
         echo json_encode(["mensagem" => "Erro: ID é Obrigatório!"]);
+        return;
+    }
+
+    $check = $pdo->prepare("SELECT 1 FROM ocorrencias WHERE id = :id");
+    $check->execute([":id" => $id]);
+    if (!$check->fetchColumn()) {
+        http_response_code(404);
+        echo json_encode(["mensagem" => "Erro: Ocorrência não encontrada!"]);
         return;
     }
 
@@ -123,7 +140,16 @@ function excluirOcorrencia() {
     $id = $_GET["id"] ?? null; //Le o ?id da URL
 
     if (!$id) {
+        http_response_code(400);
         echo json_encode(["mensagem" => "Erro: ID é Obrigatório!"]);
+        return;
+    }
+
+    $check = $pdo->prepare("SELECT 1 FROM ocorrencias WHERE id = :id");
+    $check->execute([":id" => $id]);
+    if (!$check->fetchColumn()) {
+        http_response_code(404);
+        echo json_encode(["mensagem" => "Erro: Ocorrência não encontrada!"]);
         return;
     }
 

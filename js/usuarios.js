@@ -3,6 +3,12 @@ let pendingDeleteId = null;
 //RENDERIZAR LISTA
 async function renderUsuarios() {
     const response = await fetch("/api/usuarios.php");
+
+    if (!response.ok) {
+      showToast("Erro ao carregar usuários!");
+      return;
+    }
+
     const usuarios = await response.json(); // PHP -> JSON -> array JS
 
     const container = document.getElementById("lista-usuarios");
@@ -34,7 +40,14 @@ function pedirExcluir(id) {
 
 async function confirmarExcluirUsuario() {
   const response = await fetch(`/api/usuarios.php?id=${pendingDeleteId}`, {method: "DELETE"});
+  const data = await response.json();
   closeModal("modal-excluir-usuario");
+
+  if (!response.ok) {
+    showToast(data.mensagem || "Erro ao excluir usuário!");
+    return;
+  }
+
   renderUsuarios();
   showToast("Usuário excluído!");
 }
