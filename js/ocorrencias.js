@@ -3,6 +3,12 @@ let pendingDeleteId = null;
 //RENDERIZAR LISTA
 async function renderOcorrencias() {
   const response = await fetch("/api/ocorrencias.php");
+
+  if (!response.ok) {
+    showToast("Erro ao carregar ocorrências!");
+    return;
+  }
+
   const ocorrencias = await response.json();
 
   const container = document.getElementById("lista-ocorrencias");
@@ -34,7 +40,14 @@ function pedirExcluir(id) {
 
 async function confirmarExcluirOcorrencia() {
   const response = await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {method: "DELETE"});
+  const data = await response.json();
   closeModal("modal-excluir-ocorrencia");
+
+  if (!response.ok) {
+    showToast(data.mensagem || "Erro ao excluir ocorrência!");
+    return;
+  }
+
   renderOcorrencias();
   showToast("Ocorrência excluída!");
 }

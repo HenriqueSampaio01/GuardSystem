@@ -6,11 +6,11 @@ async function doLogin() {
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({cpf, senha})
   });
-  const usuario = await response.json();
+  const data = await response.json();
 
-  if (usuario.usuario) {
+  if (response.ok && data.usuario) {
     window.location.href = "home.html";
-} else {
-    showToast(usuario.mensagem);
-}
+  } else {
+    showToast(data.mensagem || "Erro ao fazer login!");
+  }
 }
