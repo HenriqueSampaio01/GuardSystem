@@ -48,4 +48,24 @@ CREATE TABLE ocorrencias (
     
     historico TEXT NOT NULL,
     usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL
+
+    -- Assinaturas (registradas via app, não editáveis pelo site)
+    assinatura_conselheiro VARCHAR(255) NOT NULL,
+    assinatura_responsavel VARCHAR(255) NOT NULL,
+    assinatura_solicitante VARCHAR(255) NOT NULL
+);
+
+-- Tabelas geridas pelo app (fora do escopo do site)
+-- Documentadas aqui para manter o .sql fiel ao banco real do Supabase.
+CREATE TABLE adolescente (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    data_nasc DATE,
+    escola VARCHAR(255)
+);
+
+CREATE TABLE ocorrencia_adolescente (
+    id SERIAL PRIMARY KEY,
+    id_adolescente INTEGER REFERENCES adolescente(id),
+    id_ocorrencia INTEGER REFERENCES ocorrencias(id)
 );
