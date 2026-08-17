@@ -1,3 +1,9 @@
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    document.getElementById('btnCriar').click();
+  }
+});
+
 // ===== SALVAR =====
 async function adicionarUsuario() {
   const nome = document.getElementById("add-nome").value.trim();
@@ -27,9 +33,3 @@ async function adicionarUsuario() {
     window.location.href = "usuarios.html";
   }, 1000);
 }
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    document.getElementById('btnCriar').click();
-  }
-});
