@@ -50,3 +50,9 @@ async function salvarEdicao() {
     window.location.href = "usuarios.html";
   }, 1000);
 }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    document.getElementById('btnEditar').click();
+  }
+});
