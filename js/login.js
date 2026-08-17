@@ -14,3 +14,7 @@ async function doLogin() {
     showToast(data.mensagem || "Erro ao fazer login!");
   }
 }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') btnLogin.click()
+})
