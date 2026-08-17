@@ -16,5 +16,7 @@ async function doLogin() {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') btnLogin.click()
-})
+  if (e.key === 'Enter') {
+    document.getElementById('btnLogin').click();
+  }
+});
