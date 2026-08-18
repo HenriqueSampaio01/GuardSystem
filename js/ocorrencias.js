@@ -20,10 +20,11 @@ async function renderOcorrencias() {
     item.innerHTML = `
       <span class="list-icon">📄</span>
       <div class="list-info">
-        <div class="name">Ocorrência: ${o.id}</div>
-        <div class="sub">Conselheiro: ${o.conselheiro}</div>
+        <div class="name">${o.local}</div>
+        <div class="sub">📅 ${o.data} · 👤 ${o.conselheiro ?? "Sem conselheiro"}</div>
       </div>
       <div class="list-actions">
+        <button class="icon-btn" onclick="visualizarOcorrencia(${o.id})" title="Visualizar">👁️</button>
         <button class="icon-btn" onclick="editarOcorrencia(${o.id})" title="Editar">✏️</button>
         <button class="icon-btn" onclick="pedirExcluir(${o.id})" title="Excluir">🗑️</button>
       </div>
@@ -39,7 +40,7 @@ function pedirExcluir(id) {
 }
 
 async function confirmarExcluirOcorrencia() {
-  const response = await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {method: "DELETE"});
+  await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {method: "DELETE"});
   const data = await response.json();
   closeModal("modal-excluir-ocorrencia");
 
@@ -50,6 +51,11 @@ async function confirmarExcluirOcorrencia() {
 
   renderOcorrencias();
   showToast("Ocorrência excluída!");
+}
+
+// visualizar
+function visualizarOcorrencia(id) {
+  window.location.href = `visualizar-ocorrencia.html?id=${id}`;
 }
 
 // ===== EDITAR =====
