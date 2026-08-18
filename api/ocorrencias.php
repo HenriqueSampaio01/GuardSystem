@@ -22,14 +22,11 @@ function listarOcorrencias()
 
     $id = $_GET["id"] ?? null;
 
-    // Join com usuarios para trazer o nome do conselheiro que registrou
-    $sql = "SELECT o.id, o.data, o.hora, o.rua, o.bairro, o.cep, o.tipo,
-                   o.forma_de_recebimento, o.usuario_id, u.nome AS conselheiro
-            FROM ocorrencias o
-            LEFT JOIN usuarios u ON u.id = o.usuario_id";
-
     if ($id) {
-        $stmt = $pdo->prepare("$sql WHERE o.id = :id");
+        $stmt = $pdo->prepare("SELECT o.*, u.nome AS conselheiro
+                                FROM ocorrencias o
+                                LEFT JOIN usuarios u ON u.id = o.usuario_id
+                                WHERE o.id = :id");
         $stmt->execute([":id" => $id]);
         $ocorrencia = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -43,7 +40,10 @@ function listarOcorrencias()
         return;
     }
 
-    $stmt = $pdo->query("$sql ORDER BY o.data DESC, o.hora DESC");
+    $stmt = $pdo->query("SELECT o.id, o.data, o.local, u.nome AS conselheiro
+                        FROM ocorrencias o
+                        LEFT JOIN usuarios u ON u.id = o.usuario_id
+                        ORDER BY o.data DESC");
     $ocorrencias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($ocorrencias);
