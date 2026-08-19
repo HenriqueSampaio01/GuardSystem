@@ -316,11 +316,11 @@ function editarOcorrencia() {
 
 function excluirOcorrencia() {
     global $pdo;
-    $id = $_GET["id"] ?? null; //Le o ?id da URL
+    $id = $_GET["id"] ?? null;
 
     if (!$id) {
         http_response_code(400);
-        echo json_encode(["mensagem" => "Erro: ID é Obrigatório!"]);
+        echo json_encode(["mensagem" => "Erro: ID é obrigatório!"]);
         return;
     }
 
@@ -332,8 +332,23 @@ function excluirOcorrencia() {
         return;
     }
 
-    $stmt = $pdo->prepare("DELETE FROM ocorrencias WHERE id = :id");
-    $stmt->execute([":id" => $id]);
+    try {
+        $pdo->beginTransaction();
 
-    echo json_encode(["mensagem" => "Ocorrência excluída!"]);
+        // 1. Remove os vínculos com adolescentes primeiro
+        $rel = $pdo->prepare("DELETE FROM ocorrencia_adolescente WHERE id_ocorrencia = :id");
+        $rel->execute([":id" => $id]);
+
+        // 2. Agora sim deleta a ocorrência
+        $stmt = $pdo->prepare("DELETE FROM ocorrencias WHERE id = :id");
+        $stmt->execute([":id" => $id]);
+
+        $pdo->commit();
+        echo json_encode(["mensagem" => "Ocorrência excluída!"]);
+
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        http_response_code(500);
+        echo json_encode(["mensagem" => "Erro ao excluir ocorrência: " . $e->getMessage()]);
+    }
 }
