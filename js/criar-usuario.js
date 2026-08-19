@@ -10,18 +10,20 @@ async function adicionarUsuario() {
   const cpf = document.getElementById("add-cpf").value.trim();
   const senha = document.getElementById("add-senha").value.trim();
 
+  // ===== VALIDAÇÕES =====
   if (!nome || !cpf || !senha) {
     showToast("Preencha todos os campos!");
     return;
   }
 
+  // Nome: mínimo 2 partes, cada uma com pelo menos 3 letras
   const partes = nome.split(" ").filter(p => p.length > 0);
   if (partes.length < 2 || partes[0].length < 3 || partes[1].length < 3) {
     showToast("Informe nome e sobrenome, ambos com no mínimo 3 letras.");
     return;
   }
 
-  if(cpf.length !== 14){
+  if (cpf.length !== 14) {
     showToast("Preencha o CPF corretamente.");
     return;
   }
@@ -29,14 +31,14 @@ async function adicionarUsuario() {
   const senhaValida = senha.length >= 8 && /[A-Z]/.test(senha) && /[a-z]/.test(senha) && /[0-9]/.test(senha);
   if (!senhaValida) {
     showToast("A senha deve ter no mínimo 8 caracteres, com letra maiúscula, minúscula e número.");
-    return;}
-
+    return;
+  }
 
   const response = await fetch("/api/usuarios.php", {
-  method: "POST",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({nome, cpf, senha})
- });
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({nome, cpf, senha})
+  });
 
   const data = await response.json();
 
