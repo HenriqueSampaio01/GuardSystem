@@ -10,10 +10,27 @@ async function adicionarUsuario() {
   const cpf = document.getElementById("add-cpf").value.trim();
   const senha = document.getElementById("add-senha").value.trim();
 
-  if (!nome || !cpf) {
-    showToast("Preencha nome e CPF!");
+  if (!nome || !cpf || !senha) {
+    showToast("Preencha todos os campos!");
     return;
   }
+
+  const partes = nome.split(" ").filter(p => p.length > 0);
+  if (partes.length < 2 || partes[0].length < 3 || partes[1].length < 3) {
+    showToast("Informe nome e sobrenome, ambos com no mínimo 3 letras.");
+    return;
+  }
+
+  if(cpf.length !== 14){
+    showToast("Preencha o CPF corretamente.");
+    return;
+  }
+
+  const senhaValida = senha.length >= 8 && /[A-Z]/.test(senha) && /[a-z]/.test(senha) && /[0-9]/.test(senha);
+  if (!senhaValida) {
+    showToast("A senha deve ter no mínimo 8 caracteres, com letra maiúscula, minúscula e número.");
+    return;}
+
 
   const response = await fetch("/api/usuarios.php", {
   method: "POST",
