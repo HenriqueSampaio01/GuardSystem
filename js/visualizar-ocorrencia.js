@@ -49,9 +49,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  Object.entries(campos).forEach(([chave, elementoId]) => {
-    const elemento = document.getElementById(elementoId);
-    if (!elemento) return;
-    elemento.value = ocorrencia[chave] ?? "";
-  });
+  if (ocorrencia) {
+    Object.entries(campos).forEach(([chave, elementoId]) => {
+      const elemento = document.getElementById(elementoId);
+      if (!elemento) return;
+      elemento.value = ocorrencia[chave] ?? "";
+    });
+  }
 });
