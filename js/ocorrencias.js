@@ -40,7 +40,7 @@ function pedirExcluir(id) {
 }
 
 async function confirmarExcluirOcorrencia() {
-  await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {method: "DELETE"});
+  const response = await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {method: "DELETE"});
   const data = await response.json();
   closeModal("modal-excluir-ocorrencia");
 
