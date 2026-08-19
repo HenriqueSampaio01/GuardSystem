@@ -37,7 +37,7 @@ const campos = {
   assinatura_solicitante: "view-assinatura-solicitante",
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
+async function carregarOcorrencia() {
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
   const ocorrencia = await response.json();
 
@@ -56,4 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       elemento.value = ocorrencia[chave] ?? "";
     });
   }
-});
+}
+
+carregarOcorrencia();
