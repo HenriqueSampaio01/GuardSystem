@@ -62,10 +62,10 @@ async function carregarOcorrencia() {
     const img = document.getElementById(elementoId);
     if (!img) return;
     if (ocorrencia[chave]) {
-      img.src = ocorrencia[chave]; // já vem como data:image/png;base64,...
+      img.src = "data:image/png;base64," + ocorrencia[chave];
       img.style.display = "block";
     } else {
-      img.style.display = "none"; // não exibe se não tiver assinatura
+      img.style.display = "none";
     }
   });
 }
