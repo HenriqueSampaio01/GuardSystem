@@ -50,9 +50,9 @@ CREATE TABLE ocorrencias (
     usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL
 
     -- Assinaturas (registradas via app, não editáveis pelo site)
-    assinatura_conselheiro VARCHAR(255) NOT NULL,
-    assinatura_responsavel VARCHAR(255) NOT NULL,
-    assinatura_solicitante VARCHAR(255) NOT NULL
+    assinatura_conselheiro TEXT NOT NULL,
+    assinatura_responsavel TEXT NOT NULL,
+    assinatura_solicitante TEXT NOT NULL
 );
 
 -- Tabelas geridas pelo app (fora do escopo do site)

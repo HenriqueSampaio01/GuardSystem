@@ -32,9 +32,6 @@ const campos = {
   complemento_comercial: "view-complemento-comercial",
   telefone_comercial: "view-telefone-comercial",
   historico: "view-historico",
-  assinatura_conselheiro: "view-assinatura-conselheiro",
-  assinatura_responsavel: "view-assinatura-responsavel",
-  assinatura_solicitante: "view-assinatura-solicitante",
 };
 
 async function carregarOcorrencia() {
@@ -43,19 +40,34 @@ async function carregarOcorrencia() {
 
   if (!response.ok) {
     showToast(ocorrencia.mensagem || "Ocorrência não encontrada!");
-    setTimeout(() => {
-      window.location.href = "ocorrencias.html";
-    }, 1200);
+    setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1200);
     return;
   }
 
-  if (ocorrencia) {
-    Object.entries(campos).forEach(([chave, elementoId]) => {
-      const elemento = document.getElementById(elementoId);
-      if (!elemento) return;
-      elemento.value = ocorrencia[chave] ?? "";
-    });
-  }
+  // Campos de texto/input normais
+  Object.entries(campos).forEach(([chave, elementoId]) => {
+    const elemento = document.getElementById(elementoId);
+    if (!elemento) return;
+    elemento.value = ocorrencia[chave] ?? "";
+  });
+
+  // Campos de assinatura — preenchidos como <img>
+  const assinaturas = [
+    ["assinatura_conselheiro", "view-assinatura-conselheiro"],
+    ["assinatura_responsavel", "view-assinatura-responsavel"],
+    ["assinatura_solicitante", "view-assinatura-solicitante"],
+  ];
+
+  assinaturas.forEach(([chave, elementoId]) => {
+    const img = document.getElementById(elementoId);
+    if (!img) return;
+    if (ocorrencia[chave]) {
+      img.src = ocorrencia[chave]; // já vem como data:image/png;base64,...
+      img.style.display = "block";
+    } else {
+      img.style.display = "none"; // não exibe se não tiver assinatura
+    }
+  });
 }
 
 carregarOcorrencia();
