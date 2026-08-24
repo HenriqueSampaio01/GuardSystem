@@ -38,6 +38,8 @@ async function carregarOcorrencia() {
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
   const ocorrencia = await response.json();
 
+  console.log("Dados da API:", ocorrencia);
+
   if (!response.ok) {
     showToast(ocorrencia.mensagem || "Ocorrência não encontrada!");
     setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1200);
