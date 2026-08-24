@@ -1,8 +1,40 @@
 const params = new URLSearchParams(window.location.search);
 const ocorrenciaId = parseInt(params.get("id"));
 
+// Mapeamento: chave da API → id do elemento HTML
+const campos = {
+  numero_registro:          "edit-numero-registro",
+  natureza:                 "edit-natureza",
+  local:                    "edit-local",
+  data:                     "edit-data",
+  hora:                     "edit-hora",
+  solicitante:              "edit-solicitante",
+  nome_mae:                 "edit-nome-mae",
+  rg_mae:                   "edit-rg-mae",
+  cpf_mae:                  "edit-cpf-mae",
+  profissao_mae:            "edit-profissao-mae",
+  nome_pai:                 "edit-nome-pai",
+  rg_pai:                   "edit-rg-pai",
+  cpf_pai:                  "edit-cpf-pai",
+  profissao_pai:            "edit-profissao-pai",
+  nome_responsavel:         "edit-nome-responsavel",
+  rg_responsavel:           "edit-rg-responsavel",
+  profissao_responsavel:    "edit-profissao-responsavel",
+  endereco_residencial:     "edit-endereco-residencial",
+  numero_residencial:       "edit-numero-residencial",
+  bairro_residencial:       "edit-bairro-residencial",
+  complemento_residencial:  "edit-complemento-residencial",
+  telefone_residencial:     "edit-telefone-residencial",
+  endereco_comercial:       "edit-endereco-comercial",
+  numero_comercial:         "edit-numero-comercial",
+  bairro_comercial:         "edit-bairro-comercial",
+  complemento_comercial:    "edit-complemento-comercial",
+  telefone_comercial:       "edit-telefone-comercial",
+  historico:                "edit-historico",
+};
+
 // ===== PRÉ-PREENCHER FORMULÁRIO =====
-document.addEventListener("DOMContentLoaded", async () => {
+async function carregarOcorrencia() {
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
   const ocorrencia = await response.json();
 
@@ -12,37 +44,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  if (ocorrencia) {
-    document.getElementById("edit-data").value = ocorrencia.data;
-    document.getElementById("edit-hora").value  = ocorrencia.hora;
-    document.getElementById("edit-rua").value  = ocorrencia.rua;
-    document.getElementById("edit-bairro").value  = ocorrencia.bairro;
-    document.getElementById("edit-cep").value  = ocorrencia.cep;
-    document.getElementById("edit-tipo").value  = ocorrencia.tipo;
-    document.getElementById("edit-forma-recebimento").value  = ocorrencia.forma_de_recebimento;
-  }
-});
+  Object.entries(campos).forEach(([chave, elementoId]) => {
+    const el = document.getElementById(elementoId);
+    if (el) el.value = ocorrencia[chave] ?? "";
+  });
+}
 
 // ===== SALVAR =====
 async function salvarEdicao() {
-  const data = document.getElementById("edit-data").value.trim();
-  const hora = document.getElementById("edit-hora").value.trim();
-  const rua = document.getElementById("edit-rua").value.trim();
-  const bairro = document.getElementById("edit-bairro").value.trim();
-  const cep = document.getElementById("edit-cep").value.trim();
-  const tipo = document.getElementById("edit-tipo").value.trim();
-  const forma_de_recebimento = document.getElementById("edit-forma-recebimento").value.trim();
+  // Campos obrigatórios
+  const natureza   = document.getElementById("edit-natureza").value.trim();
+  const local      = document.getElementById("edit-local").value.trim();
+  const data       = document.getElementById("edit-data").value.trim();
+  const solicitante = document.getElementById("edit-solicitante").value.trim();
+  const nome_mae   = document.getElementById("edit-nome-mae").value.trim();
+  const historico  = document.getElementById("edit-historico").value.trim();
 
-  if (!data || !hora || !rua || !bairro || !cep || !tipo || !forma_de_recebimento) {
-    showToast("Preencha todos os campos!");
+  if (!natureza || !local || !data || !solicitante || !nome_mae || !historico) {
+    showToast("Preencha os campos obrigatórios: natureza, local, data, solicitante, nome da mãe e histórico.");
     return;
   }
 
+  // Monta payload com todos os campos
+  const payload = {};
+  Object.entries(campos).forEach(([chave, elementoId]) => {
+    const el = document.getElementById(elementoId);
+    payload[chave] = el ? el.value.trim() : "";
+  });
+
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
-  method: "PUT",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({data, hora, rua, bairro, cep, tipo, forma_de_recebimento: forma_de_recebimento})
- });
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
 
   const resposta = await response.json();
 
@@ -52,7 +86,7 @@ async function salvarEdicao() {
   }
 
   showToast("Ocorrência atualizada!");
-  setTimeout(() => {
-    window.location.href = "ocorrencias.html";
-  }, 1000);
+  setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1000);
 }
+
+carregarOcorrencia();
