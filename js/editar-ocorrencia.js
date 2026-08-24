@@ -46,6 +46,7 @@ async function carregarOcorrencia() {
 
   Object.entries(campos).forEach(([chave, elementoId]) => {
     const el = document.getElementById(elementoId);
+    if (!el) console.warn("Elemento não encontrado:", elementoId);
     if (el) el.value = ocorrencia[chave] ?? "";
   });
 }
