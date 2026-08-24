@@ -35,40 +35,46 @@ const campos = {
 
 // ===== PRÉ-PREENCHER FORMULÁRIO =====
 async function carregarOcorrencia() {
-  const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
-  const ocorrencia = await response.json();
-
-  console.log("Dados da API:", ocorrencia);
-
-  if (!response.ok) {
-    showToast(ocorrencia.mensagem || "Ocorrência não encontrada!");
-    setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1200);
+  if (!ocorrenciaId || isNaN(ocorrenciaId)) {
+    showToast("ID da ocorrência inválido!");
     return;
   }
 
-  Object.entries(campos).forEach(([chave, elementoId]) => {
-    const el = document.getElementById(elementoId);
-    if (!el) console.warn("Elemento não encontrado:", elementoId);
-    if (el) el.value = ocorrencia[chave] ?? "";
-  });
+  try {
+    const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
+    const ocorrencia = await response.json();
+
+    if (!response.ok) {
+      showToast(ocorrencia.mensagem || "Ocorrência não encontrada!");
+      setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1200);
+      return;
+    }
+
+    Object.entries(campos).forEach(([chave, elementoId]) => {
+      const el = document.getElementById(elementoId);
+      if (el) {
+        el.value = ocorrencia[chave] ?? "";
+      }
+    });
+  } catch (error) {
+    console.error("Erro ao carregar ocorrência:", error);
+  }
 }
 
 // ===== SALVAR =====
 async function salvarEdicao() {
-  // Campos obrigatórios
-  const natureza   = document.getElementById("edit-natureza").value.trim();
-  const local      = document.getElementById("edit-local").value.trim();
-  const data       = document.getElementById("edit-data").value.trim();
-  const solicitante = document.getElementById("edit-solicitante").value.trim();
-  const nome_mae   = document.getElementById("edit-nome-mae").value.trim();
-  const historico  = document.getElementById("edit-historico").value.trim();
+  const natureza   = document.getElementById("edit-natureza")?.value.trim();
+  const local      = document.getElementById("edit-local")?.value.trim();
+  const data       = document.getElementById("edit-data")?.value.trim();
+  const solicitante = document.getElementById("edit-solicitante")?.value.trim();
+  const nome_mae   = document.getElementById("edit-nome-mae")?.value.trim();
+  const historico  = document.getElementById("edit-historico")?.value.trim();
 
   if (!natureza || !local || !data || !solicitante || !nome_mae || !historico) {
     showToast("Preencha os campos obrigatórios: natureza, local, data, solicitante, nome da mãe e histórico.");
     return;
   }
 
-  // Monta payload com todos os campos
   const payload = {};
   Object.entries(campos).forEach(([chave, elementoId]) => {
     const el = document.getElementById(elementoId);
@@ -92,4 +98,5 @@ async function salvarEdicao() {
   setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1000);
 }
 
-carregarOcorrencia();
+// Inicializa quando o DOM estiver totalmente carregado
+document.addEventListener("DOMContentLoaded", carregarOcorrencia);
