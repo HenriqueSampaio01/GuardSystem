@@ -46,7 +46,9 @@ async function carregarOcorrencia() {
   }
 
   try {
-    const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
+    const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
+      headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
+    });
     const ocorrencia = await response.json();
 
     if (!response.ok) {
@@ -88,7 +90,7 @@ async function salvarEdicao() {
 
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`},
     body: JSON.stringify(payload),
   });
 

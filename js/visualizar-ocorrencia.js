@@ -40,7 +40,9 @@ const campos = {
 };
 
 async function carregarOcorrencia() {
-  const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`);
+  const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
+    headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
+  });
   const ocorrencia = await response.json();
 
   if (!response.ok) {

@@ -7,7 +7,9 @@ let pendingDeleteId = null;
 
 //RENDERIZAR LISTA
 async function renderUsuarios() {
-    const response = await fetch("/api/usuarios.php");
+    const response = await fetch("/api/usuarios.php", {
+      headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`},
+    });
 
     if (!response.ok) {
       showToast("Erro ao carregar usuários!");
@@ -44,7 +46,10 @@ function pedirExcluir(id) {
 }
 
 async function confirmarExcluirUsuario() {
-  const response = await fetch(`/api/usuarios.php?id=${pendingDeleteId}`, {method: "DELETE"});
+  const response = await fetch(`/api/usuarios.php?id=${pendingDeleteId}`, {
+    method: "DELETE",
+    headers: {"Authorization": `Bearer ${token}`}
+});
   const data = await response.json();
   closeModal("modal-excluir-usuario");
 

@@ -7,7 +7,9 @@ let pendingDeleteId = null;
 
 //RENDERIZAR LISTA
 async function renderOcorrencias() {
-  const response = await fetch("/api/ocorrencias.php");
+  const response = await fetch("/api/ocorrencias.php", {
+    headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
+  });
 
   if (!response.ok) {
     showToast("Erro ao carregar ocorrências!");
@@ -45,7 +47,10 @@ function pedirExcluir(id) {
 }
 
 async function confirmarExcluirOcorrencia() {
-  const response = await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {method: "DELETE"});
+  const response = await fetch(`/api/ocorrencias.php?id=${pendingDeleteId}`, {
+    method: "DELETE",
+    headers: {"Authorization": `Bearer ${token}`}
+});
   const data = await response.json();
   closeModal("modal-excluir-ocorrencia");
 

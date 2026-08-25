@@ -8,7 +8,8 @@ const userId = parseInt(params.get("id"));
 
 // ===== PRÉ-PREENCHER FORMULÁRIO =====
 document.addEventListener("DOMContentLoaded", async () => {
-  const response = await fetch(`/api/usuarios.php?id=${userId}`);
+  const response = await fetch(`/api/usuarios.php?id=${userId}`, {
+    headers: {"Authorization": `Bearer ${token}`}});
   const usuario = await response.json();
 
   if (!response.ok) {
@@ -62,7 +63,7 @@ async function salvarEdicao() {
 
   const response = await fetch(`/api/usuarios.php?id=${userId}`, {
     method: "PUT",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`},
     body: JSON.stringify(payload)
   });
 
