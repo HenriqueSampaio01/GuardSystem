@@ -7,7 +7,7 @@ let pendingDeleteId = null;
 
 //RENDERIZAR LISTA
 async function renderUsuarios() {
-  console.log(token);
+  console.log('token:', localStorage.getItem('token'));
     const response = await fetch("/api/usuarios.php", {
       headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`},
     });
