@@ -1,5 +1,8 @@
 <?php
 require_once "db.php";
+require_once __DIR__ . "/../vendor/autoload.php";
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 //Permite que o front JS acessa a API
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -41,7 +44,12 @@ if(!password_verify($senha, $usuario["senha"])){
     echo json_encode(["mensagem" => "Erro: Senha incorreta!"]);
     return;
 }
-
-echo json_encode(["mensagem" => "Login realizado com sucesso!", "usuario" => ["nome" => $usuario["nome"], "id" => $usuario["id"]]]);
+$payload = [
+    "id"   => $usuario["id"],
+    "nome" => $usuario["nome"]
+];
+$chaveSecreta = getenv('JWT_SECRET');
+$token = JWT::encode($payload, $chaveSecreta, 'HS256');
+echo json_encode(["mensagem" => "Login realizado com sucesso!", "usuario" => ["nome" => $usuario["nome"], "id" => $usuario["id"]], "token" => $token]);
 
 }

@@ -1,3 +1,8 @@
+const token = localStorage.getItem('token');
+if (!token) {
+    window.location.href = "login.html";
+}
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     document.getElementById('btnCriar').click();
@@ -9,6 +14,7 @@ async function adicionarUsuario() {
   const nome = document.getElementById("add-nome").value.trim();
   const cpf = document.getElementById("add-cpf").value.trim();
   const senha = document.getElementById("add-senha").value.trim();
+  const token = localStorage.getItem('token');
 
   // ===== VALIDAÇÕES =====
   if (!nome || !cpf || !senha) {
@@ -36,7 +42,7 @@ async function adicionarUsuario() {
 
   const response = await fetch("/api/usuarios.php", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`},
     body: JSON.stringify({nome, cpf, senha})
   });
 

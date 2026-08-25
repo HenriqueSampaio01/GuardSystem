@@ -8,7 +8,8 @@ async function doLogin() {
   });
   const data = await response.json();
 
-  if (response.ok && data.usuario) {
+  if (response.ok && data.usuario && data.token) {
+    localStorage.setItem('token', data.token);
     window.location.href = "home.html";
   } else {
     showToast(data.mensagem || "Erro ao fazer login!");

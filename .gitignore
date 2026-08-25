@@ -404,3 +404,5 @@ FodyWeavers.xsd
 .env
 # Knowledge docs locais (nao versionar)
 knowledge.md
+
+vendor/

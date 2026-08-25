@@ -1,3 +1,8 @@
+const token = localStorage.getItem('token');
+if (!token) {
+    window.location.href = "login.html";
+}
+
 const params = new URLSearchParams(window.location.search);
 const userId = parseInt(params.get("id"));
 

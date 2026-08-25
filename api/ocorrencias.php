@@ -1,5 +1,7 @@
 <?php
 require_once "db.php";
+require_once "auth.php";
+verificarToken();
 
 //Permite que o front JS acessa a API
 header("Access-Control-Allow-Origin: *");
