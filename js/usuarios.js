@@ -7,10 +7,10 @@ let pendingDeleteId = null;
 
 //RENDERIZAR LISTA
 async function renderUsuarios() {
-  console.log('token:', localStorage.getItem('token'));
-    const response = await fetch("/api/usuarios.php", {
+  const token = localStorage.getItem('token');
+  const response = await fetch("/api/usuarios.php", {
       headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`},
-    });
+  });
 
     if (!response.ok) {
       showToast("Erro ao carregar usuários!");
@@ -47,6 +47,7 @@ function pedirExcluir(id) {
 }
 
 async function confirmarExcluirUsuario() {
+  const token = localStorage.getItem('token');
   const response = await fetch(`/api/usuarios.php?id=${pendingDeleteId}`, {
     method: "DELETE",
     headers: {"Authorization": `Bearer ${token}`}
