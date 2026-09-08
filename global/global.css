@@ -492,12 +492,11 @@ input:focus-visible {
 .assinatura-img {
   width: 100%;
   max-width: 340px;
-  max-height: 160px;
+  max-height: 400px;
   object-fit: contain;
   border-radius: var(--radius-md);
   border: 1.5px solid var(--input-border);
   background: rgba(255, 255, 255, 0.95);
-  padding: 8px;
   display: block;
 }
 
