@@ -41,7 +41,7 @@ const campos = {
 
 async function carregarOcorrencia() {
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
-    headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` }
   });
   const ocorrencia = await response.json();
 
@@ -51,20 +51,19 @@ async function carregarOcorrencia() {
     return;
   }
 
-  // Campos de texto/input normais
+  // Preenche todos os campos de texto/input
   Object.entries(campos).forEach(([chave, elementoId]) => {
     const elemento = document.getElementById(elementoId);
     if (!elemento) return;
     elemento.value = ocorrencia[chave] ?? "";
   });
 
-  // Campos de assinatura — preenchidos como <img>
+  // Assinaturas
   const assinaturas = [
     ["assinatura_conselheiro", "view-assinatura-conselheiro"],
     ["assinatura_responsavel", "view-assinatura-responsavel"],
     ["assinatura_solicitante", "view-assinatura-solicitante"],
   ];
-
   assinaturas.forEach(([chave, elementoId]) => {
     const img = document.getElementById(elementoId);
     if (!img) return;
@@ -77,4 +76,54 @@ async function carregarOcorrencia() {
   });
 }
 
+async function carregarAdolescentes() {
+  const container = document.getElementById("lista-adolescentes");
+
+  try {
+    const response = await fetch(`/api/adolescentes.php?ocorrencia_id=${ocorrenciaId}`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    const adolescentes = await response.json();
+
+    if (!response.ok) {
+      container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center;">
+        Erro ao carregar adolescentes.
+      </p>`;
+      return;
+    }
+
+    if (adolescentes.length === 0) {
+      container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 12px;">
+        Nenhum adolescente vinculado a esta ocorrência.
+      </p>`;
+      return;
+    }
+
+    container.innerHTML = "";
+    adolescentes.forEach((a, i) => {
+      const card = document.createElement("div");
+      card.className = "list-item";
+      card.style.marginBottom = "10px";
+      card.innerHTML = `
+        <span class="list-icon">🧑</span>
+        <div class="list-info">
+          <div class="name">${a.nome}</div>
+          <div class="sub">
+            📅 ${a.data_nasc ?? "—"}
+            ${a.escola ? ` · 🏫 ${a.escola}` : ""}
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center;">
+      Erro ao carregar adolescentes.
+    </p>`;
+    console.error("Erro ao carregar adolescentes:", error);
+  }
+}
+
 carregarOcorrencia();
+carregarAdolescentes();

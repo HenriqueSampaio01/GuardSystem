@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GuardSystem — Editar Ocorrência</title>
     <link rel="stylesheet" href="/global/global.css" />
-    <script src="/js/editar-ocorrencia.js" defer></script>
     <script src="/global/utils.js" defer></script>
+    <script src="/js/editar-ocorrencia.js" defer></script>
   </head>
   <body>
     <div class="page">
@@ -19,163 +19,165 @@
 
       <div class="avatar-icon">📄</div>
 
-      <h2 class="section-title">Dados da Ocorrência</h2>
+      <!-- NAV DE ABAS -->
+      <nav class="tab-nav">
+        <button class="tab-btn active" onclick="mudarAba('ocorrencia')">Ocorrência</button>
+        <button class="tab-btn" onclick="mudarAba('responsaveis')">Responsáveis</button>
+        <button class="tab-btn" onclick="mudarAba('enderecos')">Endereços</button>
+        <button class="tab-btn" onclick="mudarAba('historico')">Histórico</button>
+      </nav>
 
-      <div class="form-group">
-        <label for="edit-numero-registro">Número de Registro:</label>
-        <input type="number" id="edit-numero-registro" placeholder="Ex: 001" />
+      <!-- ABA 1: OCORRÊNCIA -->
+      <div class="tab-panel active" id="tab-ocorrencia">
+        <div class="form-group">
+          <label for="edit-numero-registro">Número de Registro:</label>
+          <input type="number" id="edit-numero-registro" placeholder="Ex: 001" />
+        </div>
+        <div class="form-group">
+          <label for="edit-natureza">Natureza:</label>
+          <input type="text" id="edit-natureza" placeholder="Ex: Negligência, Evasão Escolar..." />
+        </div>
+        <div class="form-group">
+          <label for="edit-local">Local:</label>
+          <input type="text" id="edit-local" placeholder="Local da ocorrência" />
+        </div>
+        <div class="form-group">
+          <label for="edit-data">Data:</label>
+          <input type="date" id="edit-data" />
+        </div>
+        <div class="form-group">
+          <label for="edit-hora">Hora:</label>
+          <input type="text" id="edit-hora" placeholder="Ex: 16h30" />
+        </div>
+        <div class="form-group">
+          <label for="edit-solicitante">Solicitante:</label>
+          <input type="text" id="edit-solicitante" placeholder="Nome do solicitante" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="edit-natureza">Natureza:</label>
-        <input type="text" id="edit-natureza" placeholder="Ex: Negligência, Evasão Escolar..." />
+      <!-- ABA 2: RESPONSÁVEIS -->
+      <div class="tab-panel" id="tab-responsaveis">
+        <h2 class="section-title">Mãe</h2>
+        <div class="form-group">
+          <label for="edit-nome-mae">Nome:</label>
+          <input type="text" id="edit-nome-mae" placeholder="Nome completo da mãe" />
+        </div>
+        <div class="form-group">
+          <label for="edit-rg-mae">RG:</label>
+          <input type="text" id="edit-rg-mae" placeholder="RG da mãe" />
+        </div>
+        <div class="form-group">
+          <label for="edit-cpf-mae">CPF:</label>
+          <input type="text" id="edit-cpf-mae" placeholder="CPF da mãe" maxlength="14" oninput="maskCPF(this)" />
+        </div>
+        <div class="form-group">
+          <label for="edit-profissao-mae">Profissão:</label>
+          <input type="text" id="edit-profissao-mae" placeholder="Profissão da mãe" />
+        </div>
+
+        <h2 class="section-title">Pai</h2>
+        <div class="form-group">
+          <label for="edit-nome-pai">Nome:</label>
+          <input type="text" id="edit-nome-pai" placeholder="Nome completo do pai" />
+        </div>
+        <div class="form-group">
+          <label for="edit-rg-pai">RG:</label>
+          <input type="text" id="edit-rg-pai" placeholder="RG do pai" />
+        </div>
+        <div class="form-group">
+          <label for="edit-cpf-pai">CPF:</label>
+          <input type="text" id="edit-cpf-pai" placeholder="CPF do pai" maxlength="14" oninput="maskCPF(this)" />
+        </div>
+        <div class="form-group">
+          <label for="edit-profissao-pai">Profissão:</label>
+          <input type="text" id="edit-profissao-pai" placeholder="Profissão do pai" />
+        </div>
+
+        <h2 class="section-title">Responsável</h2>
+        <div class="form-group">
+          <label for="edit-nome-responsavel">Nome:</label>
+          <input type="text" id="edit-nome-responsavel" placeholder="Nome do responsável" />
+        </div>
+        <div class="form-group">
+          <label for="edit-rg-responsavel">RG:</label>
+          <input type="text" id="edit-rg-responsavel" placeholder="RG do responsável" />
+        </div>
+        <div class="form-group">
+          <label for="edit-profissao-responsavel">Profissão:</label>
+          <input type="text" id="edit-profissao-responsavel" placeholder="Profissão do responsável" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="edit-local">Local:</label>
-        <input type="text" id="edit-local" placeholder="Local da ocorrência" />
+      <!-- ABA 3: ENDEREÇOS -->
+      <div class="tab-panel" id="tab-enderecos">
+        <h2 class="section-title">Endereço Residencial</h2>
+        <div class="form-group">
+          <label for="edit-endereco-residencial">Endereço:</label>
+          <input type="text" id="edit-endereco-residencial" placeholder="Rua / Av." />
+        </div>
+        <div class="form-group">
+          <label for="edit-numero-residencial">Número:</label>
+          <input type="text" id="edit-numero-residencial" placeholder="Nº" />
+        </div>
+        <div class="form-group">
+          <label for="edit-bairro-residencial">Bairro:</label>
+          <input type="text" id="edit-bairro-residencial" placeholder="Bairro" />
+        </div>
+        <div class="form-group">
+          <label for="edit-complemento-residencial">Complemento:</label>
+          <input type="text" id="edit-complemento-residencial" placeholder="Apto, bloco, etc." />
+        </div>
+        <div class="form-group">
+          <label for="edit-telefone-residencial">Telefone:</label>
+          <input type="text" id="edit-telefone-residencial" placeholder="(00) 00000-0000" />
+        </div>
+
+        <h2 class="section-title">Endereço Comercial</h2>
+        <div class="form-group">
+          <label for="edit-endereco-comercial">Endereço:</label>
+          <input type="text" id="edit-endereco-comercial" placeholder="Rua / Av." />
+        </div>
+        <div class="form-group">
+          <label for="edit-numero-comercial">Número:</label>
+          <input type="text" id="edit-numero-comercial" placeholder="Nº" />
+        </div>
+        <div class="form-group">
+          <label for="edit-bairro-comercial">Bairro:</label>
+          <input type="text" id="edit-bairro-comercial" placeholder="Bairro" />
+        </div>
+        <div class="form-group">
+          <label for="edit-complemento-comercial">Complemento:</label>
+          <input type="text" id="edit-complemento-comercial" placeholder="Sala, andar, etc." />
+        </div>
+        <div class="form-group">
+          <label for="edit-telefone-comercial">Telefone:</label>
+          <input type="text" id="edit-telefone-comercial" placeholder="(00) 00000-0000" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="edit-data">Data:</label>
-        <input type="date" id="edit-data" />
+      <!-- ABA 4: HISTÓRICO -->
+      <div class="tab-panel" id="tab-historico">
+        <div class="form-group">
+          <label for="edit-historico">Histórico:</label>
+          <textarea id="edit-historico" placeholder="Descreva o histórico da ocorrência..."></textarea>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="edit-hora">Hora:</label>
-        <input type="text" id="edit-hora" placeholder="Ex: 16h30"/>
-      </div>
-
-      <div class="form-group">
-        <label for="edit-solicitante">Solicitante:</label>
-        <input type="text" id="edit-solicitante" placeholder="Nome do solicitante" />
-      </div>
-
-      <h2 class="section-title">Dados da Mãe</h2>
-
-      <div class="form-group">
-        <label for="edit-nome-mae">Nome:</label>
-        <input type="text" id="edit-nome-mae" placeholder="Nome completo da mãe" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-rg-mae">RG:</label>
-        <input type="text" id="edit-rg-mae" placeholder="RG da mãe" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-cpf-mae">CPF:</label>
-        <input type="text" id="edit-cpf-mae" placeholder="CPF da mãe" maxlength="14" oninput="maskCPF(this)" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-profissao-mae">Profissão:</label>
-        <input type="text" id="edit-profissao-mae" placeholder="Profissão da mãe" />
-      </div>
-
-      <h2 class="section-title">Dados do Pai</h2>
-
-      <div class="form-group">
-        <label for="edit-nome-pai">Nome:</label>
-        <input type="text" id="edit-nome-pai" placeholder="Nome completo do pai" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-rg-pai">RG:</label>
-        <input type="text" id="edit-rg-pai" placeholder="RG do pai" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-cpf-pai">CPF:</label>
-        <input type="text" id="edit-cpf-pai" placeholder="CPF do pai" maxlength="14" oninput="maskCPF(this)" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-profissao-pai">Profissão:</label>
-        <input type="text" id="edit-profissao-pai" placeholder="Profissão do pai" />
-      </div>
-
-      <h2 class="section-title">Dados do Responsável</h2>
-
-      <div class="form-group">
-        <label for="edit-nome-responsavel">Nome:</label>
-        <input type="text" id="edit-nome-responsavel" placeholder="Nome do responsável" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-rg-responsavel">RG:</label>
-        <input type="text" id="edit-rg-responsavel" placeholder="RG do responsável" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-profissao-responsavel">Profissão:</label>
-        <input type="text" id="edit-profissao-responsavel" placeholder="Profissão do responsável" />
-      </div>
-
-      <h2 class="section-title">Endereço Residencial</h2>
-
-      <div class="form-group">
-        <label for="edit-endereco-residencial">Endereço:</label>
-        <input type="text" id="edit-endereco-residencial" placeholder="Rua / Av." />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-numero-residencial">Número:</label>
-        <input type="text" id="edit-numero-residencial" placeholder="Nº" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-bairro-residencial">Bairro:</label>
-        <input type="text" id="edit-bairro-residencial" placeholder="Bairro" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-complemento-residencial">Complemento:</label>
-        <input type="text" id="edit-complemento-residencial" placeholder="Apto, bloco, etc." />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-telefone-residencial">Telefone:</label>
-        <input type="text" id="edit-telefone-residencial" placeholder="(00) 00000-0000" />
-      </div>
-
-      <h2 class="section-title">Endereço Comercial</h2>
-
-      <div class="form-group">
-        <label for="edit-endereco-comercial">Endereço:</label>
-        <input type="text" id="edit-endereco-comercial" placeholder="Rua / Av." />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-numero-comercial">Número:</label>
-        <input type="text" id="edit-numero-comercial" placeholder="Nº" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-bairro-comercial">Bairro:</label>
-        <input type="text" id="edit-bairro-comercial" placeholder="Bairro" />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-complemento-comercial">Complemento:</label>
-        <input type="text" id="edit-complemento-comercial" placeholder="Sala, andar, etc." />
-      </div>
-
-      <div class="form-group">
-        <label for="edit-telefone-comercial">Telefone:</label>
-        <input type="text" id="edit-telefone-comercial" placeholder="(00) 00000-0000" />
-      </div>
-
-      <h2 class="section-title">Histórico</h2>
-
-      <div class="form-group">
-        <label for="edit-historico">Histórico:</label>
-        <textarea id="edit-historico" rows="5" placeholder="Descreva o histórico da ocorrência..."></textarea>
-      </div>
-
-      <button class="btn btn-dark" onclick="salvarEdicao()">Salvar</button>
+      <button class="btn btn-dark" style="margin-top: 8px;" onclick="salvarEdicao()">Salvar</button>
     </div>
 
     <div class="toast" id="toast"></div>
+
+    <script>
+      function mudarAba(id) {
+        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+          const ids = ['ocorrencia', 'responsaveis', 'enderecos', 'historico'];
+          btn.classList.toggle('active', ids[i] === id);
+        });
+        document.querySelectorAll('.tab-panel').forEach(p => {
+          p.classList.toggle('active', p.id === 'tab-' + id);
+        });
+      }
+    </script>
   </body>
 </html>

@@ -19,188 +19,195 @@
 
       <div class="avatar-icon">📄</div>
 
-      <h2 class="section-title">Dados da Ocorrência</h2>
+      <!-- NAV DE ABAS -->
+      <nav class="tab-nav">
+        <button class="tab-btn active" onclick="mudarAba('ocorrencia')">Ocorrência</button>
+        <button class="tab-btn" onclick="mudarAba('adolescentes')">Adolescente(s)</button>
+        <button class="tab-btn" onclick="mudarAba('responsaveis')">Responsáveis</button>
+        <button class="tab-btn" onclick="mudarAba('enderecos')">Endereços</button>
+        <button class="tab-btn" onclick="mudarAba('historico')">Histórico</button>
+      </nav>
 
-      <div class="form-group">
-        <label for="view-id">ID:</label>
-        <input type="text" id="view-id" readonly />
+      <!-- ABA 1: OCORRÊNCIA -->
+      <div class="tab-panel active" id="tab-ocorrencia">
+        <div class="form-group">
+          <label for="view-id">ID:</label>
+          <input type="text" id="view-id" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-numero-registro">Número de Registro:</label>
+          <input type="text" id="view-numero-registro" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-natureza">Natureza:</label>
+          <input type="text" id="view-natureza" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-local">Local:</label>
+          <input type="text" id="view-local" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-data">Data:</label>
+          <input type="date" id="view-data" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-hora">Hora:</label>
+          <input type="text" id="view-hora" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-solicitante">Solicitante:</label>
+          <input type="text" id="view-solicitante" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-conselheiro">Conselheiro:</label>
+          <input type="text" id="view-conselheiro" readonly />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="view-numero-registro">Número de Registro:</label>
-        <input type="text" id="view-numero-registro" readonly />
+      <!-- ABA 2: ADOLESCENTES -->
+      <div class="tab-panel" id="tab-adolescentes">
+        <div id="lista-adolescentes" style="width:100%; max-width:340px;">
+          <p style="color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 12px;">
+            Carregando...
+          </p>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="view-natureza">Natureza:</label>
-        <input type="text" id="view-natureza" readonly />
+      <!-- ABA 3: RESPONSÁVEIS -->
+      <div class="tab-panel" id="tab-responsaveis">
+        <h2 class="section-title">Mãe</h2>
+        <div class="form-group">
+          <label for="view-nome-mae">Nome:</label>
+          <input type="text" id="view-nome-mae" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-rg-mae">RG:</label>
+          <input type="text" id="view-rg-mae" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-cpf-mae">CPF:</label>
+          <input type="text" id="view-cpf-mae" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-profissao-mae">Profissão:</label>
+          <input type="text" id="view-profissao-mae" readonly />
+        </div>
+
+        <h2 class="section-title">Pai</h2>
+        <div class="form-group">
+          <label for="view-nome-pai">Nome:</label>
+          <input type="text" id="view-nome-pai" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-rg-pai">RG:</label>
+          <input type="text" id="view-rg-pai" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-cpf-pai">CPF:</label>
+          <input type="text" id="view-cpf-pai" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-profissao-pai">Profissão:</label>
+          <input type="text" id="view-profissao-pai" readonly />
+        </div>
+
+        <h2 class="section-title">Responsável</h2>
+        <div class="form-group">
+          <label for="view-nome-responsavel">Nome:</label>
+          <input type="text" id="view-nome-responsavel" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-rg-responsavel">RG:</label>
+          <input type="text" id="view-rg-responsavel" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-profissao-responsavel">Profissão:</label>
+          <input type="text" id="view-profissao-responsavel" readonly />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="view-local">Local:</label>
-        <input type="text" id="view-local" readonly />
+      <!-- ABA 4: ENDEREÇOS -->
+      <div class="tab-panel" id="tab-enderecos">
+        <h2 class="section-title">Endereço Residencial</h2>
+        <div class="form-group">
+          <label for="view-endereco-residencial">Endereço:</label>
+          <input type="text" id="view-endereco-residencial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-numero-residencial">Número:</label>
+          <input type="text" id="view-numero-residencial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-bairro-residencial">Bairro:</label>
+          <input type="text" id="view-bairro-residencial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-complemento-residencial">Complemento:</label>
+          <input type="text" id="view-complemento-residencial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-telefone-residencial">Telefone:</label>
+          <input type="text" id="view-telefone-residencial" readonly />
+        </div>
+
+        <h2 class="section-title">Endereço Comercial</h2>
+        <div class="form-group">
+          <label for="view-endereco-comercial">Endereço:</label>
+          <input type="text" id="view-endereco-comercial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-numero-comercial">Número:</label>
+          <input type="text" id="view-numero-comercial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-bairro-comercial">Bairro:</label>
+          <input type="text" id="view-bairro-comercial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-complemento-comercial">Complemento:</label>
+          <input type="text" id="view-complemento-comercial" readonly />
+        </div>
+        <div class="form-group">
+          <label for="view-telefone-comercial">Telefone:</label>
+          <input type="text" id="view-telefone-comercial" readonly />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="view-data">Data:</label>
-        <input type="date" id="view-data" readonly />
-      </div>
+      <!-- ABA 5: HISTÓRICO + ASSINATURAS -->
+      <div class="tab-panel" id="tab-historico">
+        <div class="form-group">
+          <label for="view-historico">Histórico:</label>
+          <textarea id="view-historico" readonly></textarea>
+        </div>
 
-      <div class="form-group">
-        <label for="view-hora">Hora:</label>
-        <input type="text" id="view-hora" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-solicitante">Solicitante:</label>
-        <input type="text" id="view-solicitante" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-conselheiro">Conselheiro:</label>
-        <input type="text" id="view-conselheiro" readonly />
-      </div>
-
-      <h2 class="section-title">Dados da Mãe</h2>
-
-      <div class="form-group">
-        <label for="view-nome-mae">Nome:</label>
-        <input type="text" id="view-nome-mae" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-rg-mae">RG:</label>
-        <input type="text" id="view-rg-mae" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-cpf-mae">CPF:</label>
-        <input type="text" id="view-cpf-mae" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-profissao-mae">Profissão:</label>
-        <input type="text" id="view-profissao-mae" readonly />
-      </div>
-
-      <h2 class="section-title">Dados do Pai</h2>
-
-      <div class="form-group">
-        <label for="view-nome-pai">Nome:</label>
-        <input type="text" id="view-nome-pai" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-rg-pai">RG:</label>
-        <input type="text" id="view-rg-pai" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-cpf-pai">CPF:</label>
-        <input type="text" id="view-cpf-pai" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-profissao-pai">Profissão:</label>
-        <input type="text" id="view-profissao-pai" readonly />
-      </div>
-
-      <h2 class="section-title">Dados do Responsável</h2>
-
-      <div class="form-group">
-        <label for="view-nome-responsavel">Nome:</label>
-        <input type="text" id="view-nome-responsavel" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-rg-responsavel">RG:</label>
-        <input type="text" id="view-rg-responsavel" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-profissao-responsavel">Profissão:</label>
-        <input type="text" id="view-profissao-responsavel" readonly />
-      </div>
-
-      <h2 class="section-title">Endereço Residencial</h2>
-
-      <div class="form-group">
-        <label for="view-endereco-residencial">Endereço:</label>
-        <input type="text" id="view-endereco-residencial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-numero-residencial">Número:</label>
-        <input type="text" id="view-numero-residencial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-bairro-residencial">Bairro:</label>
-        <input type="text" id="view-bairro-residencial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-complemento-residencial">Complemento:</label>
-        <input type="text" id="view-complemento-residencial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-telefone-residencial">Telefone:</label>
-        <input type="text" id="view-telefone-residencial" readonly />
-      </div>
-
-      <h2 class="section-title">Endereço Comercial</h2>
-
-      <div class="form-group">
-        <label for="view-endereco-comercial">Endereço:</label>
-        <input type="text" id="view-endereco-comercial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-numero-comercial">Número:</label>
-        <input type="text" id="view-numero-comercial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-bairro-comercial">Bairro:</label>
-        <input type="text" id="view-bairro-comercial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-complemento-comercial">Complemento:</label>
-        <input type="text" id="view-complemento-comercial" readonly />
-      </div>
-
-      <div class="form-group">
-        <label for="view-telefone-comercial">Telefone:</label>
-        <input type="text" id="view-telefone-comercial" readonly />
-      </div>
-
-      <h2 class="section-title">Histórico</h2>
-
-      <div class="form-group">
-        <label for="view-historico">Histórico:</label>
-        <textarea id="view-historico" rows="5" readonly></textarea>
-      </div>
-
-      <h2 class="section-title">Assinaturas</h2>
-
-      <div class="form-group">
-        <label>Assinatura do Conselheiro:</label>
-        <img id="view-assinatura-conselheiro" class="assinatura-img" alt="Assinatura do conselheiro" />
-      </div>
-
-      <div class="form-group">
-        <label for="view-assinatura-responsavel">Assinatura do Responsável:</label>
-        <img id="view-assinatura-responsavel" class="assinatura-img" alt="Assinatura do responsável" />
-      </div>
-
-      <div class="form-group">
-        <label for="view-assinatura-solicitante">Assinatura do Solicitante:</label>
-        <img id="view-assinatura-solicitante" class="assinatura-img" alt="Assinatura do solicitante" />
+        <h2 class="section-title">Assinaturas</h2>
+        <div class="form-group">
+          <label>Conselheiro Responsável:</label>
+          <img id="view-assinatura-conselheiro" class="assinatura-img" alt="Assinatura do conselheiro" />
+        </div>
+        <div class="form-group">
+          <label>Pai/Mãe ou Responsável:</label>
+          <img id="view-assinatura-responsavel" class="assinatura-img" alt="Assinatura do responsável" />
+        </div>
+        <div class="form-group">
+          <label>Solicitante:</label>
+          <img id="view-assinatura-solicitante" class="assinatura-img" alt="Assinatura do solicitante" />
+        </div>
       </div>
     </div>
 
     <div class="toast" id="toast"></div>
+
+    <script>
+      function mudarAba(id) {
+        const ids = ['ocorrencia', 'adolescentes', 'responsaveis', 'enderecos', 'historico'];
+        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+          btn.classList.toggle('active', ids[i] === id);
+        });
+        document.querySelectorAll('.tab-panel').forEach(p => {
+          p.classList.toggle('active', p.id === 'tab-' + id);
+        });
+      }
+    </script>
   </body>
 </html>
