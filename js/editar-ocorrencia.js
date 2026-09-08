@@ -6,6 +6,16 @@ if (!token) {
 const params = new URLSearchParams(window.location.search);
 const ocorrenciaId = parseInt(params.get("id"));
 
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  });
+});
+
 // Mapeamento: chave da API → id do elemento HTML
 const campos = {
   numero_registro:          "edit-numero-registro",

@@ -6,6 +6,18 @@ if (!token) {
 const params = new URLSearchParams(window.location.search);
 const ocorrenciaId = parseInt(params.get("id"));
 
+// ===== ABAS =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  });
+});
+
+// ===== CAMPOS =====
 const campos = {
   id: "view-id",
   numero_registro: "view-numero-registro",
@@ -51,14 +63,12 @@ async function carregarOcorrencia() {
     return;
   }
 
-  // Preenche todos os campos de texto/input
   Object.entries(campos).forEach(([chave, elementoId]) => {
     const elemento = document.getElementById(elementoId);
     if (!elemento) return;
     elemento.value = ocorrencia[chave] ?? "";
   });
 
-  // Assinaturas
   const assinaturas = [
     ["assinatura_conselheiro", "view-assinatura-conselheiro"],
     ["assinatura_responsavel", "view-assinatura-responsavel"],
@@ -86,21 +96,17 @@ async function carregarAdolescentes() {
     const adolescentes = await response.json();
 
     if (!response.ok) {
-      container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center;">
-        Erro ao carregar adolescentes.
-      </p>`;
+      container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center;">Erro ao carregar adolescentes.</p>`;
       return;
     }
 
     if (adolescentes.length === 0) {
-      container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 12px;">
-        Nenhum adolescente vinculado a esta ocorrência.
-      </p>`;
+      container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 12px;">Nenhum adolescente vinculado a esta ocorrência.</p>`;
       return;
     }
 
     container.innerHTML = "";
-    adolescentes.forEach((a, i) => {
+    adolescentes.forEach(a => {
       const card = document.createElement("div");
       card.className = "list-item";
       card.style.marginBottom = "10px";
@@ -118,9 +124,7 @@ async function carregarAdolescentes() {
     });
 
   } catch (error) {
-    container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center;">
-      Erro ao carregar adolescentes.
-    </p>`;
+    container.innerHTML = `<p style="color: var(--text-dim); font-size: 14px; text-align: center;">Erro ao carregar adolescentes.</p>`;
     console.error("Erro ao carregar adolescentes:", error);
   }
 }

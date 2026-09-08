@@ -7,6 +7,50 @@
     <link rel="stylesheet" href="/global/global.css" />
     <script src="/global/utils.js" defer></script>
     <script src="/js/visualizar-ocorrencia.js" defer></script>
+    <style>
+      .tab-nav {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 560px;
+        margin-bottom: 28px;
+      }
+      .tab-btn {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        padding: 8px 14px;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.05);
+        color: rgba(236,234,255,0.62);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+      }
+      .tab-btn:hover {
+        background: rgba(255,255,255,0.09);
+        color: #fff;
+      }
+      .tab-btn.active {
+        background: linear-gradient(135deg, rgba(155,89,232,0.35), rgba(61,207,239,0.25));
+        border-color: rgba(61,207,239,0.45);
+        color: #fff;
+      }
+      .tab-panel {
+        display: none;
+        width: 100%;
+        max-width: 560px;
+        flex-direction: column;
+        align-items: center;
+      }
+      .tab-panel.active {
+        display: flex;
+      }
+    </style>
   </head>
   <body>
     <div class="page">
@@ -19,13 +63,12 @@
 
       <div class="avatar-icon">📄</div>
 
-      <!-- NAV DE ABAS -->
       <nav class="tab-nav">
-        <button class="tab-btn active" onclick="mudarAba('ocorrencia')">Ocorrência</button>
-        <button class="tab-btn" onclick="mudarAba('adolescentes')">Adolescente(s)</button>
-        <button class="tab-btn" onclick="mudarAba('responsaveis')">Responsáveis</button>
-        <button class="tab-btn" onclick="mudarAba('enderecos')">Endereços</button>
-        <button class="tab-btn" onclick="mudarAba('historico')">Histórico</button>
+        <button class="tab-btn active" data-tab="ocorrencia">Ocorrência</button>
+        <button class="tab-btn" data-tab="adolescentes">Adolescente(s)</button>
+        <button class="tab-btn" data-tab="responsaveis">Responsáveis</button>
+        <button class="tab-btn" data-tab="enderecos">Endereços</button>
+        <button class="tab-btn" data-tab="historico">Histórico</button>
       </nav>
 
       <!-- ABA 1: OCORRÊNCIA -->
@@ -66,10 +109,8 @@
 
       <!-- ABA 2: ADOLESCENTES -->
       <div class="tab-panel" id="tab-adolescentes">
-        <div id="lista-adolescentes" style="width:100%; max-width:340px;">
-          <p style="color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 12px;">
-            Carregando...
-          </p>
+        <div id="lista-adolescentes" style="width:100%; max-width:340px; margin-top: 8px;">
+          <p style="color: var(--text-dim); font-size: 14px; text-align: center;">Carregando...</p>
         </div>
       </div>
 
@@ -183,31 +224,19 @@
         <h2 class="section-title">Assinaturas</h2>
         <div class="form-group">
           <label>Conselheiro Responsável:</label>
-          <img id="view-assinatura-conselheiro" class="assinatura-img" alt="Assinatura do conselheiro" />
+          <img id="view-assinatura-conselheiro" class="assinatura-img" alt="Assinatura do conselheiro" style="display:none;" />
         </div>
         <div class="form-group">
           <label>Pai/Mãe ou Responsável:</label>
-          <img id="view-assinatura-responsavel" class="assinatura-img" alt="Assinatura do responsável" />
+          <img id="view-assinatura-responsavel" class="assinatura-img" alt="Assinatura do responsável" style="display:none;" />
         </div>
         <div class="form-group">
           <label>Solicitante:</label>
-          <img id="view-assinatura-solicitante" class="assinatura-img" alt="Assinatura do solicitante" />
+          <img id="view-assinatura-solicitante" class="assinatura-img" alt="Assinatura do solicitante" style="display:none;" />
         </div>
       </div>
     </div>
 
     <div class="toast" id="toast"></div>
-
-    <script>
-      function mudarAba(id) {
-        const ids = ['ocorrencia', 'adolescentes', 'responsaveis', 'enderecos', 'historico'];
-        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-          btn.classList.toggle('active', ids[i] === id);
-        });
-        document.querySelectorAll('.tab-panel').forEach(p => {
-          p.classList.toggle('active', p.id === 'tab-' + id);
-        });
-      }
-    </script>
   </body>
 </html>
