@@ -48,13 +48,3 @@
 .home-actions .btn-action {
   flex-direction: column-reverse;
 }
-
-.assinatura-img {
-  width: 100%;
-  max-width: 340px;
-  border-radius: 14px;
-  border: 1.5px solid rgba(157, 140, 255, 0.28);
-  background: rgba(255, 255, 255, 0.95);
-  padding: 8px;
-  display: block;
-}

@@ -466,6 +466,40 @@ input:focus-visible {
   outline: 2px solid var(--accent-cyan);
   outline-offset: 2px;
 }
+.form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--input-border);
+  background: var(--input-bg);
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  color: #3d3a55;
+  outline: none;
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  height: 180px;
+  resize: none;
+  overflow-y: auto;
+}
+.form-group textarea::placeholder { color: #9a97b0; }
+.form-group textarea:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 4px rgba(61, 207, 239, 0.16), var(--shadow-soft);
+}
+
+/* ===== ASSINATURAS ===== */
+.assinatura-img {
+  width: 100%;
+  max-width: 340px;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--input-border);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px;
+  display: block;
+}
 
 @media (prefers-reduced-motion: reduce) {
   body::after, .logo::before { animation: none; }
