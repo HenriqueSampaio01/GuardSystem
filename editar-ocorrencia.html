@@ -7,6 +7,50 @@
     <link rel="stylesheet" href="/global/global.css" />
     <script src="/global/utils.js" defer></script>
     <script src="/js/editar-ocorrencia.js" defer></script>
+    <style>
+      .tab-nav {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 560px;
+        margin-bottom: 28px;
+      }
+      .tab-btn {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        padding: 8px 14px;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.05);
+        color: rgba(236,234,255,0.62);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+      }
+      .tab-btn:hover {
+        background: rgba(255,255,255,0.09);
+        color: #fff;
+      }
+      .tab-btn.active {
+        background: linear-gradient(135deg, rgba(155,89,232,0.35), rgba(61,207,239,0.25));
+        border-color: rgba(61,207,239,0.45);
+        color: #fff;
+      }
+      .tab-panel {
+        display: none;
+        width: 100%;
+        max-width: 560px;
+        flex-direction: column;
+        align-items: center;
+      }
+      .tab-panel.active {
+        display: flex;
+      }
+    </style>
   </head>
   <body>
     <div class="page">
@@ -19,12 +63,11 @@
 
       <div class="avatar-icon">📄</div>
 
-      <!-- NAV DE ABAS -->
       <nav class="tab-nav">
-        <button class="tab-btn active" data-tab="mudarAba('ocorrencia')">Ocorrência</button>
-        <button class="tab-btn" data-tab="mudarAba('responsaveis')">Responsáveis</button>
-        <button class="tab-btn" data-tab="mudarAba('enderecos')">Endereços</button>
-        <button class="tab-btn" data-tab="mudarAba('historico')">Histórico</button>
+        <button class="tab-btn active" data-tab="ocorrencia">Ocorrência</button>
+        <button class="tab-btn" data-tab="responsaveis">Responsáveis</button>
+        <button class="tab-btn" data-tab="enderecos">Endereços</button>
+        <button class="tab-btn" data-tab="historico">Histórico</button>
       </nav>
 
       <!-- ABA 1: OCORRÊNCIA -->
@@ -163,21 +206,9 @@
         </div>
       </div>
 
-      <button class="btn btn-dark" style="margin-top: 8px;" onclick="salvarEdicao()">Salvar</button>
+      <button class="btn btn-dark" style="margin-top: 8px;" id="btnSalvar">Salvar</button>
     </div>
 
     <div class="toast" id="toast"></div>
-
-    <script>
-      function mudarAba(id) {
-        document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-          const ids = ['ocorrencia', 'responsaveis', 'enderecos', 'historico'];
-          btn.classList.toggle('active', ids[i] === id);
-        });
-        document.querySelectorAll('.tab-panel').forEach(p => {
-          p.classList.toggle('active', p.id === 'tab-' + id);
-        });
-      }
-    </script>
   </body>
 </html>

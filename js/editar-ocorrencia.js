@@ -6,6 +6,7 @@ if (!token) {
 const params = new URLSearchParams(window.location.search);
 const ocorrenciaId = parseInt(params.get("id"));
 
+// ===== ABAS =====
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
@@ -16,7 +17,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// Mapeamento: chave da API → id do elemento HTML
+// ===== CAMPOS =====
 const campos = {
   numero_registro:          "edit-numero-registro",
   natureza:                 "edit-natureza",
@@ -48,7 +49,7 @@ const campos = {
   historico:                "edit-historico",
 };
 
-// ===== PRÉ-PREENCHER FORMULÁRIO =====
+// ===== PRÉ-PREENCHER =====
 async function carregarOcorrencia() {
   if (!ocorrenciaId || isNaN(ocorrenciaId)) {
     showToast("ID da ocorrência inválido!");
@@ -57,7 +58,7 @@ async function carregarOcorrencia() {
 
   try {
     const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
-      headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` }
     });
     const ocorrencia = await response.json();
 
@@ -69,23 +70,23 @@ async function carregarOcorrencia() {
 
     Object.entries(campos).forEach(([chave, elementoId]) => {
       const el = document.getElementById(elementoId);
-      if (el) {
-        el.value = ocorrencia[chave] ?? "";
-      }
+      if (el) el.value = ocorrencia[chave] ?? "";
     });
+
   } catch (error) {
     console.error("Erro ao carregar ocorrência:", error);
+    showToast("Erro ao carregar ocorrência!");
   }
 }
 
 // ===== SALVAR =====
 async function salvarEdicao() {
-  const natureza   = document.getElementById("edit-natureza")?.value.trim();
-  const local      = document.getElementById("edit-local")?.value.trim();
-  const data       = document.getElementById("edit-data")?.value.trim();
+  const natureza    = document.getElementById("edit-natureza")?.value.trim();
+  const local       = document.getElementById("edit-local")?.value.trim();
+  const data        = document.getElementById("edit-data")?.value.trim();
   const solicitante = document.getElementById("edit-solicitante")?.value.trim();
-  const nome_mae   = document.getElementById("edit-nome-mae")?.value.trim();
-  const historico  = document.getElementById("edit-historico")?.value.trim();
+  const nome_mae    = document.getElementById("edit-nome-mae")?.value.trim();
+  const historico   = document.getElementById("edit-historico")?.value.trim();
 
   if (!natureza || !local || !data || !solicitante || !nome_mae || !historico) {
     showToast("Preencha os campos obrigatórios: natureza, local, data, solicitante, nome da mãe e histórico.");
@@ -100,7 +101,7 @@ async function salvarEdicao() {
 
   const response = await fetch(`/api/ocorrencias.php?id=${ocorrenciaId}`, {
     method: "PUT",
-    headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`},
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
     body: JSON.stringify(payload),
   });
 
@@ -115,5 +116,6 @@ async function salvarEdicao() {
   setTimeout(() => { window.location.href = "ocorrencias.html"; }, 1000);
 }
 
-// Inicializa quando o DOM estiver totalmente carregado
-document.addEventListener("DOMContentLoaded", carregarOcorrencia);
+// ===== INIT =====
+document.getElementById('btnSalvar').addEventListener('click', salvarEdicao);
+carregarOcorrencia();
