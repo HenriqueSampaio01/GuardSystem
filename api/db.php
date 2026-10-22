@@ -21,7 +21,9 @@ try {
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
+    // Detalhes técnicos ficam só no log do servidor, nunca na resposta
+    error_log("Falha de conexão com o banco: " . $e->getMessage());
     http_response_code(500);
-    echo json_encode(["erro" => $e->getMessage()]);
+    echo json_encode(["mensagem" => "Erro interno de conexão com o banco de dados."]);
     exit;
 }

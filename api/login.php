@@ -33,21 +33,19 @@ function login() {
     $stmt->execute([":cpf" => $cpf]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if(!$usuario){
-        http_response_code(404);
-        echo json_encode(["mensagem" => "Erro: Usuário não encontrado!"]);
+    // Mesma resposta para CPF inexistente e senha errada: impede descobrir quais CPFs estão cadastrados
+    if(!$usuario || !password_verify($senha, $usuario["senha"])){
+        http_response_code(401);
+        echo json_encode(["mensagem" => "Erro: CPF ou senha inválidos!"]);
         return;
-}
+    }
 
-if(!password_verify($senha, $usuario["senha"])){
-    http_response_code(401);
-    echo json_encode(["mensagem" => "Erro: Senha incorreta!"]);
-    return;
-}
-$payload = [
-    "id"   => $usuario["id"],
-    "nome" => $usuario["nome"]
-];
+    $payload = [
+        "id"   => $usuario["id"],
+        "nome" => $usuario["nome"],
+        "iat"  => time(),
+        "exp"  => time() + 8 * 3600 // token expira em 8 horas
+    ];
 $chaveSecreta = getenv('JWT_SECRET');
 $token = JWT::encode($payload, $chaveSecreta, 'HS256');
 echo json_encode(["mensagem" => "Login realizado com sucesso!", "usuario" => ["nome" => $usuario["nome"], "id" => $usuario["id"]], "token" => $token]);

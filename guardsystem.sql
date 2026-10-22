@@ -47,7 +47,7 @@ CREATE TABLE ocorrencias (
     telefone_comercial VARCHAR(20),
     
     historico TEXT NOT NULL,
-    usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL
+    usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
 
     -- Assinaturas (registradas via app, não editáveis pelo site)
     assinatura_conselheiro TEXT NOT NULL,

@@ -201,7 +201,8 @@ function criarOcorrencia() {
     } catch (Exception $e) {
         $pdo->rollBack();
         http_response_code(500);
-        echo json_encode(["mensagem" => "Erro ao registrar ocorrência: " . $e->getMessage()]);
+        error_log("Erro ao registrar ocorrência: " . $e->getMessage());
+        echo json_encode(["mensagem" => "Erro interno ao registrar ocorrência!"]);
     }
 }
 
@@ -351,6 +352,7 @@ function excluirOcorrencia() {
     } catch (Exception $e) {
         $pdo->rollBack();
         http_response_code(500);
-        echo json_encode(["mensagem" => "Erro ao excluir ocorrência: " . $e->getMessage()]);
+        error_log("Erro ao excluir ocorrência: " . $e->getMessage());
+        echo json_encode(["mensagem" => "Erro interno ao excluir ocorrência!"]);
     }
 }
